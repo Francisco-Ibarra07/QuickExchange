@@ -1,6 +1,6 @@
 from flask import render_template, url_for, flash, redirect
 from quickexchange import app
-from quickexchange.forms import RegistrationForm, LoginForm
+from quickexchange.forms import RegistrationForm, LoginForm, URLSetterForm
 from quickexchange.models import User, Post
 
 posts = [
@@ -18,11 +18,27 @@ posts = [
     }
 ]
 
+url_stack = []
 
-@app.route("/")
-@app.route("/home")
+
+@app.route("/home", methods=['GET', 'POST'])
 def home():
-    return render_template('home.html', posts=posts)
+    form = URLSetterForm()
+
+    # Return top url if pop button was pressed
+    if form.pop_button.data:
+        if len(url_stack) == 0:
+            flash(f'No URL set yet. Type in a valid URL then hit "Push" to store it', 'danger')
+        else:
+            return redirect(url_stack[0])
+
+    if form.validate_on_submit():
+        # If push button was pressed, set new url
+        if form.push_button.data:
+            flash(f'New URL set to: {form.url.data}.')
+            url_stack.insert(0, form.url.data)
+        
+    return render_template('home.html', form=form, history=url_stack)
 
 @app.route("/about")
 def about():
