@@ -51,7 +51,8 @@ class UpdateAccountForm(FlaskForm):
             if user:
                 raise ValidationError('That email is taken. Please choose another email.')
 
-class URLSetterForm(FlaskForm):
+class DataPostForm(FlaskForm):
     url = StringField('URL Link', validators=[URL()])
+    img = FileField('Set an image file!', validators=[FileAllowed(['jpg', 'png', 'gif'])])
     push_button = SubmitField('Push')
     pop_button = SubmitField('Pop')

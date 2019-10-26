@@ -30,20 +30,23 @@ class Post(db.Model):
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
 
-class URLPost(db.Model):
+class DataPost(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    url = db.Column(db.String(100), nullable=False)  
+    url = db.Column(db.String(100), default=None)
+    img_filename = db.Column(db.String(), default=None)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     def __repr__(self):
-        return f"{self.url}"
-
+        if self.url:
+            return f"{self.url}"
+        else:
+            return f"{self.img_filename}"
 
 # Quick way to import models and test:
-# >>> from quickexchange.models import User, Post, URLPost
+# >>> from quickexchange.models import User, Post, DataPost
 # >>> from quickexchange import db
 # >>> db.create_all()
 # >>> User.query.all()
 # []
-# >>> URLPost.query.all()
+# >>> DataPost.query.all()
 # []

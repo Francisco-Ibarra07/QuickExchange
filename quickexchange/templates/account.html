@@ -52,13 +52,13 @@
           {{ form.email(class="form-control form-control-lg is-invalid")}}
           <div class="invalid-feedback">
             {% for error in form.email.errors %}
-            <span>{{ error }}</span>
+              <span>{{ error }}</span>
             {% endfor %}
           </div>
 
           <!-- ELSE just show normal -->
           {% else %}
-          {{ form.email(class="form-control form-control-lg")}}
+            {{ form.email(class="form-control form-control-lg")}}
           {% endif %}
 
         </div>
