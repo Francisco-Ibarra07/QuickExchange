@@ -3,8 +3,8 @@ import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request
 from quickexchange import app, bcrypt, db
-from quickexchange.forms import RegistrationForm, LoginForm, UpdateAccountForm, URLSetterForm
-from quickexchange.models import User, Post, URLPost
+from quickexchange.forms import RegistrationForm, LoginForm, UpdateAccountForm, DataPostForm
+from quickexchange.models import User, Post, DataPost
 from flask_login import login_user, current_user, logout_user, login_required
 
 @app.route('/')
@@ -13,29 +13,39 @@ def root():
 
 @app.route("/home", methods=['GET', 'POST'])
 def home():
-    form = URLSetterForm()
+    form = DataPostForm()
 
     # Return top url if pop button was pressed
     if form.pop_button.data:
-        last_url = URLPost.query.order_by(URLPost.id.desc()).first()
-        print(last_url)
-        if not last_url:
-            flash(f'No URL set yet. Type in a valid URL then hit "Push" to store it', 'danger')
+        last_post = DataPost.query.order_by(DataPost.id.desc()).first()
+        if last_post.url:
+            return redirect(last_post.url)
+        elif last_post.img_filename:
+            image_file = url_for('static', filename='profile_pics/' + last_post.img_filename)
+            return render_template('preview-media.html', title='Preview Media', image_file=image_file, history=DataPost.query.order_by(DataPost.id.desc()).all())
         else:
-            return redirect(last_url)
-
-    if form.validate_on_submit():
-        # If push button was pressed, set new url
-        if form.push_button.data:
-
-            # Create a new url post object and store it
-            new_url_post = URLPost(url=form.url.data)
-            db.session.add(new_url_post)
-            db.session.commit()
-
-            flash(f'New URL set to: {form.url.data}.')
+            flash(f'No Data set yet. Set a new post then hit "Push" to store it', 'danger')
     
-    return render_template('home.html', form=form, history=URLPost.query.order_by(URLPost.id.desc()).all())
+    # If push button was pressed
+    elif form.push_button.data:
+        if form.img.data and form.url.data:
+            flash(f'Looks like you are trying to submit two things. Choose one only!', 'danger')
+        elif form.url.data:
+            # Create a new url post object and store it
+            new_data_post = DataPost(url=form.url.data)
+            db.session.add(new_data_post)
+            db.session.commit()
+            flash(f'New URL set to: {form.url.data}', 'success')
+        elif form.img.data:
+            picture_filename = save_picture(form.img.data)
+            new_data_post = DataPost(img_filename=picture_filename)
+            db.session.add(new_data_post)
+            db.session.commit()
+            flash(f'New image set!', 'success')
+
+        return redirect(url_for('home'))
+    
+    return render_template('home.html', form=form, history=DataPost.query.order_by(DataPost.id.desc()).all())
 
 @app.route("/about")
 def about():
@@ -123,4 +133,4 @@ def account():
         form.email.data = current_user.email
 
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-    return render_template('account.html', title='Account', image_file=image_file, form=form)
+    return render_template('account.html', title='Account', image_file=image_file, form=form, history=DataPost.query.order_by(DataPost.id.desc()).all())
