@@ -1,25 +1,13 @@
 from flask import render_template, url_for, flash, redirect
-from quickexchange import app
+from quickexchange import app, db
 from quickexchange.forms import RegistrationForm, LoginForm, URLSetterForm
-from quickexchange.models import User, Post
-
-posts = [
-    {
-        'author': 'Francisco Ibarra',
-        'title': 'Blog Post 1',
-        'content': 'First post content',
-        'date_posted': 'April 20, 2018'
-    },
-    {
-        'author': 'Jane Doe',
-        'title': 'Blog Post 2',
-        'content': 'Second post content',
-        'date_posted': 'April 21, 2018'
-    }
-]
+from quickexchange.models import User, Post, URLPost
 
 url_stack = []
 
+@app.route('/')
+def root():
+    return redirect(url_for('home'))
 
 @app.route("/home", methods=['GET', 'POST'])
 def home():
@@ -27,18 +15,25 @@ def home():
 
     # Return top url if pop button was pressed
     if form.pop_button.data:
-        if len(url_stack) == 0:
+        last_url = URLPost.query.order_by(URLPost.id.desc()).first()
+        print(last_url)
+        if not last_url:
             flash(f'No URL set yet. Type in a valid URL then hit "Push" to store it', 'danger')
         else:
-            return redirect(url_stack[0])
+            return redirect(last_url)
 
     if form.validate_on_submit():
         # If push button was pressed, set new url
         if form.push_button.data:
+
+            # Create a new url post object and store it
+            new_url_post = URLPost(url=form.url.data)
+            db.session.add(new_url_post)
+            db.session.commit()
+
             flash(f'New URL set to: {form.url.data}.')
-            url_stack.insert(0, form.url.data)
-        
-    return render_template('home.html', form=form, history=url_stack)
+    
+    return render_template('home.html', form=form, history=URLPost.query.order_by(URLPost.id.desc()).all())
 
 @app.route("/about")
 def about():

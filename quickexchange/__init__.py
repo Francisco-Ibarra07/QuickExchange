@@ -10,3 +10,8 @@ db = SQLAlchemy(app)
 
 # Import here to avoid circular imports
 from quickexchange import routes
+
+@app.before_first_request
+def create_tables():
+  db.create_all()
+  

@@ -24,3 +24,21 @@ class Post(db.Model):
 
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
+
+class URLPost(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    url = db.Column(db.String(100), nullable=False)  
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+    def __repr__(self):
+        return f"{self.url}"
+
+
+# Quick way to import models and test:
+# >>> from quickexchange.models import User, Post, URLPost
+# >>> from quickexchange import db
+# >>> db.create_all()
+# >>> User.query.all()
+# []
+# >>> URLPost.query.all()
+# []
