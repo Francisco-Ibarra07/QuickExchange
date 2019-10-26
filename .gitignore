@@ -2,3 +2,5 @@ venv/
 .vscode
 quickexchange/__pycache__/
 quickexchange/site.db
+flask_cheatsheet.pdf
+quickexchange/site.db
