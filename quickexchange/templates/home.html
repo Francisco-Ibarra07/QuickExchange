@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="content-section">
-  <form method="POST" action="">
+  <form method="POST" action="" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
 
     <fieldset class="form-group">
@@ -24,6 +24,18 @@
           {{ form.url(class="form-control form-control-lg")}}
         {% endif %}
       </div>
+
+      <!-- Form group for any IMAGE FILE -->
+      <div class="form-group">
+        {{ form.img.label() }}
+        {{ form.img(class="form-control-file") }}
+        {% if form.img.errors %}
+          {% for error in form.img.errors %}
+            <span class="text-danger">{{ error }}</span></br>
+          {% endfor %}
+        {% endif %}
+      </div>
+
     </fieldset>
 
     <div class="form-group">
