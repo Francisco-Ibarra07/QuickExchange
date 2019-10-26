@@ -62,13 +62,19 @@
         </div>
         <div class="col-md-4">
           <div class="content-section">
-            <h3>Our Sidebar</h3>
-            <p class='text-muted'>You can put any information here you'd like.
+            <h3>History</h3>
+            <p class='text-muted'>Any recent links posted will be shown here.
               <ul class="list-group">
-                <li class="list-group-item list-group-item-light">Latest Posts</li>
-                <li class="list-group-item list-group-item-light">Announcements</li>
-                <li class="list-group-item list-group-item-light">Calendars</li>
-                <li class="list-group-item list-group-item-light">etc</li>
+                {% if history %}
+                  {% for url in history %}
+                    <li class="list-group-item list-group-item-light">
+                      <a class="nav-item nav-link" href="{{url}}">{{ url }}</a>
+                    </li>
+                  {% endfor %}
+
+                {% else %}
+                  <li class="list-group-item list-group-item-light">History is currently empty</li>
+                {% endif %}
               </ul>
             </p>
           </div>
