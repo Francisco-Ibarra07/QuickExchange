@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
-from wtforms.validators import DataRequired, Length, Email, EqualTo
+from wtforms.validators import DataRequired, Length, Email, EqualTo, URL
 
 
 class RegistrationForm(FlaskForm):
@@ -17,3 +17,8 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     remember = BooleanField('Remember Me') # Used to see if we need a secure cookie to remember the user
     submit = SubmitField('Login')
+
+class URLSetterForm(FlaskForm):
+    url = StringField('URL Link', validators=[URL()])
+    push_button = SubmitField('Push')
+    pop_button = SubmitField('Pop')
