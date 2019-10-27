@@ -71,9 +71,14 @@
             <p class='text-muted'>Any recent links posted will be shown here.
               <ul class="list-group">
                 {% if history %}
-                  {% for url in history %}
+                  {% for data in history %}
                     <li class="list-group-item list-group-item-light">
-                      <a class="nav-item nav-link" href="{{url}}">{{ url }}</a>
+
+                      {% if data.url %}
+                        <a class="nav-item nav-link" href="{{data.url}}">URL: {{ data.url }}</a>
+                      {% else %}
+                        <a class="nav-item nav-link" href="{{ url_for('static', filename='profile_pics/' + data.img_filename) }}">Img: {{data.img_filename}}</a>
+                      {% endif %}
                     </li>
                   {% endfor %}
 
