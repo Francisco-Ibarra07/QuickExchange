@@ -3,7 +3,7 @@ import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request
 from quickexchange import app, bcrypt, db
-from quickexchange.forms import RegistrationForm, LoginForm, UpdateAccountForm, DataPostForm
+from quickexchange.forms import RegistrationForm, LoginForm, UpdateAccountForm, DataPostForm, PostForm
 from quickexchange.models import User, Post, DataPost
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -134,3 +134,15 @@ def account():
 
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('account.html', title='Account', image_file=image_file, form=form, history=DataPost.query.order_by(DataPost.id.desc()).all())
+
+@app.route('/post/new', methods=['GET', 'POST'])
+@login_required
+def create_post():
+    form = PostForm()
+
+    if form.validate_on_submit():
+        flash('Post has been created!', 'success')
+        return redirect(url_for('home'))
+
+    return render_template('create-post.html', title='New Post', form=form)
+
