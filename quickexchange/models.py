@@ -13,6 +13,7 @@ class User(db.Model, UserMixin):
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
     posts = db.relationship('Post', backref='author', lazy=True)
+    #data_posts = db.relationship('DataPost', backref='op', lazy=True)
 
     # How our object is printed
     def __repr__(self):
@@ -35,18 +36,10 @@ class DataPost(db.Model):
     url = db.Column(db.String(100), default=None)
     img_filename = db.Column(db.String(), default=None)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    #user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
         if self.url:
             return f"{self.url}"
         else:
             return f"{self.img_filename}"
-
-# Quick way to import models and test:
-# >>> from quickexchange.models import User, Post, DataPost
-# >>> from quickexchange import db
-# >>> db.create_all()
-# >>> User.query.all()
-# []
-# >>> DataPost.query.all()
-# []

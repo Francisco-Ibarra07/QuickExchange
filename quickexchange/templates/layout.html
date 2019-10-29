@@ -1,103 +1,99 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
 
-    {% if title %}
-        <title>Quick Exchange - {{ title }}</title>
-    {% else %}
-        <title>Quick Exchange</title>
-    {% endif %}
+  {% if title %}
+  <title>Quick Exchange - {{ title }}</title>
+  {% else %}
+  <title>Quick Exchange</title>
+  {% endif %}
 </head>
+
 <body>
-    <header class="site-header">
-      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-        <div class="container">
-          <a class="navbar-brand mr-4" href="/">Quick Exchange</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarToggle">
-            <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
-              <a class="nav-item nav-link" href="{{ url_for('about') }}">About</a>
-            </div>
-            <!-- Navbar Right Side -->
-            <div class="navbar-nav">
-              {% if current_user.is_authenticated %}
-                <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
-                <a class="nav-item nav-link" href="{{ url_for('create_post') }}">New Post</a>
-                <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
-              {% else %}
-                <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
-                <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
-              {% endif %}
-            </div>
-          </div>
-        </div>
-      </nav>
-    </header>
-    <main role="main" class="container">
-      <div class="row">
-        <div class="col-md-8">
-          
-          <!-- Display any messages here -->
-          <!-- Grabs any flashed messages -->
-          {% with messages = get_flashed_messages(with_categories=true) %} 
-            
-            <!-- If messages list is NOT empty -->
-            {% if messages %}
-              <!-- Print out all messages using for loop -->
-              {% for category, message in messages %}
-                <div class="alert alert-{{ category }}">
-                  {{ message }}
-                </div>
-              {% endfor %}
+
+  <!--==========================
+  Header
+  ============================-->
+  <header class="site-header">
+    <nav class="navbar navbar-expand-md navbar-dark navbar-style fixed-top">
+      <div class="container">
+        <a class="navbar-brand mr-4" href="{{ url_for('home') }}">
+          <img class="logo float-left" src="{{ url_for('static', filename='QuickExchangeLogo.png') }}">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+          aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navigation Links -->
+        <div class="collapse navbar-collapse" id="navbarToggle">
+          <ul class="nav navbar-nav navbar-right">
+
+            <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
+
+            {% if current_user.is_authenticated %}
+            <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
+            <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+            <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
+            <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
             {% endif %}
-          {% endwith %}
 
-          {% block content %}{% endblock %}
-
+          </ul>
         </div>
-        <div class="col-md-4">
-          <div class="content-section">
-            <h3>History</h3>
-            <p class='text-muted'>Any recent links posted will be shown here.
-              <ul class="list-group">
-                {% if history %}
-                  {% for data in history %}
-                    <li class="list-group-item list-group-item-light">
 
-                      {% if data.url %}
-                        <a class="nav-item nav-link" href="{{data.url}}">URL: {{ data.url }}</a>
-                      {% else %}
-                        <a class="nav-item nav-link" href="{{ url_for('static', filename='profile_pics/' + data.img_filename) }}">Img: {{data.img_filename}}</a>
-                      {% endif %}
-                    </li>
-                  {% endfor %}
-
-                {% else %}
-                  <li class="list-group-item list-group-item-light">History is currently empty</li>
-                {% endif %}
-              </ul>
-            </p>
-          </div>
-        </div>
       </div>
-    </main>
+    </nav>
+  </header>
 
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <main role="main" class="container">
+    <div class="row">
+      <div class="col-md-8">
+
+        <!-- Display any messages here -->
+        <!-- Grabs any flashed messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+        <!-- If messages list is NOT empty -->
+        {% if messages %}
+        <!-- Print out all messages using for loop -->
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+          {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+
+      </div>
+    </div>
+  </main>
+
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
 </body>
+
 </html>
