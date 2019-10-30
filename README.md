@@ -1,4 +1,4 @@
-# QuickExchange (Site in progress)
+# QuickExchange (Site is currently a work in progress)
 Swap data between devices
 
 ## Built With
