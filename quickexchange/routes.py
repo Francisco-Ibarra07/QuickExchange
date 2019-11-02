@@ -18,13 +18,14 @@ def home():
     # Return top url if pop button was pressed
     if form.pop_button.data:
         last_post = DataPost.query.order_by(DataPost.id.desc()).first()
-        if last_post.url:
+        if last_post is None:
+            flash(f'No Data set yet. Set a new post then hit "Push" to store it', 'danger')
+            return redirect(url_for('home'))
+        elif last_post.url:
             return redirect(last_post.url)
         elif last_post.img_filename:
             image_file = url_for('static', filename='profile_pics/' + last_post.img_filename)
             return render_template('preview-media.html', title='Preview Media', image_file=image_file, history=DataPost.query.order_by(DataPost.id.desc()).all())
-        else:
-            flash(f'No Data set yet. Set a new post then hit "Push" to store it', 'danger')
     
     # If push button was pressed
     elif form.push_button.data:
