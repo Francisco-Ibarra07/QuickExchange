@@ -1,48 +1,58 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="content-section">
-  <form method="POST" action="" enctype="multipart/form-data">
-    {{ form.hidden_tag() }}
 
-    <fieldset class="form-group">
-      <legend class="border-bottom mb-4">Submit a link!</legend>
+{% if current_user.is_authenticated %}
+  
+  <div class="content-section">
+    <form method="POST" action="" enctype="multipart/form-data">
+      {{ form.hidden_tag() }}
 
-      <!-- Form for URL LINK -->
-      <div class="form-group">
-        {{ form.url.label(class="form-control-label") }}
+      <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Submit a link!</legend>
 
-        {% if form.url.errors %}
+        <!-- Form for URL LINK -->
+        <div class="form-group">
+          {{ form.url.label(class="form-control-label") }}
 
-        {{ form.url(class="form-control form-control-lg is-invalid") }}
-        <div class="invalid-feedback">
-          {% for error in form.url.errors %}
-            <span>{{ error }}</span>
-          {% endfor %}
+          {% if form.url.errors %}
+
+          {{ form.url(class="form-control form-control-lg is-invalid") }}
+          <div class="invalid-feedback">
+            {% for error in form.url.errors %}
+              <span>{{ error }}</span>
+            {% endfor %}
+          </div>
+
+          {% else %}
+            {{ form.url(class="form-control form-control-lg")}}
+          {% endif %}
         </div>
 
-        {% else %}
-          {{ form.url(class="form-control form-control-lg")}}
-        {% endif %}
-      </div>
+        <!-- Form group for any IMAGE FILE -->
+        <div class="form-group">
+          {{ form.img.label() }}
+          {{ form.img(class="form-control-file") }}
+          {% if form.img.errors %}
+            {% for error in form.img.errors %}
+              <span class="text-danger">{{ error }}</span></br>
+            {% endfor %}
+          {% endif %}
+        </div>
 
-      <!-- Form group for any IMAGE FILE -->
+      </fieldset>
+
       <div class="form-group">
-        {{ form.img.label() }}
-        {{ form.img(class="form-control-file") }}
-        {% if form.img.errors %}
-          {% for error in form.img.errors %}
-            <span class="text-danger">{{ error }}</span></br>
-          {% endfor %}
-        {% endif %}
+        {{ form.push_button(class="btn btn-outline-info") }}
+        {{ form.pop_button(class="btn btn-outline-info") }}
       </div>
 
-    </fieldset>
+    </form>
+  </div>
 
-    <div class="form-group">
-      {{ form.push_button(class="btn btn-outline-info") }}
-      {{ form.pop_button(class="btn btn-outline-info") }}
-    </div>
+{% else %}
+  <div class="container">
+    <h1>You need to log in first before you start posting (Temp message)</h1>
+  </div>
+{% endif %}
 
-  </form>
-</div>
 {% endblock content %}
