@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="quickexchange/static/QE.png"/>
+</p>
+
 # QuickExchange (Site is currently a work in progress)
 Use QuickExchange as your middleman to swap pictures, URL links, videos, or files between any mobile or desktop platform.
 
