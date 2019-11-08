@@ -14,9 +14,7 @@
       <div class="form-group">
         <!-- Prints label of username field -->
         {{ form.username.label(class="form-control-label") }}
-        <!-- U can pass in a bootstrap class -->
 
-        <!-- IF our form as any errors, print out errors -->
         {% if form.username.errors %}
         {{ form.username(class="form-control form-control-lg is-invalid")}}
         <div class="invalid-feedback">
@@ -25,7 +23,6 @@
           {% endfor %}
         </div>
 
-        <!-- ELSE just show normal -->
         {% else %}
         {{ form.username(class="form-control form-control-lg")}}
         {% endif %}
@@ -35,9 +32,7 @@
       <!-- Form group for EMAIL -->
       <div class="form-group">
         {{ form.email.label(class="form-control-label") }}
-        <!-- U can pass in a bootstrap class -->
         
-        <!-- IF our form as any errors, print out errors -->
         {% if form.email.errors %}
         
           {{ form.email(class="form-control form-control-lg is-invalid")}}
@@ -47,7 +42,6 @@
             {% endfor %}
           </div>
 
-        <!-- ELSE just show normal -->
         {% else %}
           {{ form.email(class="form-control form-control-lg")}}
         {% endif %}
@@ -58,7 +52,6 @@
       <div class="form-group">
         {{ form.password.label(class="form-control-label") }}
         
-        <!-- IF our form as any errors, print out errors -->
         {% if form.password.errors %}
         
           {{ form.password(class="form-control form-control-lg is-invalid")}}
@@ -68,7 +61,6 @@
             {% endfor %}
           </div>
 
-        <!-- ELSE just show normal -->
         {% else %}
           {{ form.password(class="form-control form-control-lg")}}
         {% endif %}
@@ -79,7 +71,6 @@
       <div class="form-group">
         {{ form.confirm_password.label(class="form-control-label") }}
         
-        <!-- IF our form as any errors, print out errors -->
         {% if form.confirm_password.errors %}
         
           {{ form.confirm_password(class="form-control form-control-lg is-invalid")}}
@@ -89,7 +80,6 @@
             {% endfor %}
           </div>
 
-        <!-- ELSE just show normal -->
         {% else %}
           {{ form.confirm_password(class="form-control form-control-lg")}}
         {% endif %}
@@ -98,7 +88,6 @@
 
     </fieldset>
 
-    <!-- SUBMIT button -->
     <div class="form-group">
       {{ form.submit(class="btn btn-outline-info") }}
     </div>

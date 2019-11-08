@@ -13,9 +13,7 @@
       <!-- Form group for TITLE -->
       <div class="form-group">
         {{ form.title.label(class="form-control-label") }}
-        <!-- U can pass in a bootstrap class -->
 
-        <!-- IF our form as any errors, print out errors -->
         {% if form.title.errors %}
 
         {{ form.title(class="form-control form-control-lg is-invalid")}}
@@ -25,7 +23,6 @@
           {% endfor %}
         </div>
 
-        <!-- ELSE just show normal -->
         {% else %}
         {{ form.title(class="form-control form-control-lg")}}
         {% endif %}
@@ -36,7 +33,6 @@
       <div class="form-group">
         {{ form.content.label(class="form-control-label") }}
 
-        <!-- IF our form as any errors, print out errors -->
         {% if form.content.errors %}
 
         {{ form.content(class="form-control form-control-lg is-invalid")}}
@@ -46,7 +42,6 @@
           {% endfor %}
         </div>
 
-        <!-- ELSE just show normal -->
         {% else %}
         {{ form.content(class="form-control form-control-lg")}}
         {% endif %}
@@ -55,7 +50,6 @@
 
     </fieldset>
 
-    <!-- SUBMIT button -->
     <div class="form-group">
       {{ form.submit(class="btn btn-outline-info") }}
     </div>
