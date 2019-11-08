@@ -49,6 +49,26 @@
     </form>
   </div>
 
+  <div class="col-md-8">
+    <div class="content-section">
+      <h3>History</h3>
+      <p class='text-muted'>Any recent links posted will be shown here.
+        <ul class="list-group">
+          {% if history %}
+            {% for url in history %}
+              <li class="list-group-item list-group-item-light">
+                <a class="nav-item nav-link" href="{{url}}">{{ url }}</a>
+              </li>
+            {% endfor %}
+
+          {% else %}
+            <li class="list-group-item list-group-item-light">History is currently empty</li>
+          {% endif %}
+        </ul>
+      </p>
+    </div>
+  </div>
+
 {% else %}
   <div class="container">
     <h1>You need to log in first before you start posting (Temp message)</h1>
