@@ -27,14 +27,40 @@
         </div>
 
         <!-- Form group for any IMAGE FILE -->
-        <div class="form-group">
-          {{ form.img.label() }}
+        <div class="form-group" id="media-files">
+          <!-- {{ form.img.label() }}
           {{ form.img(class="form-control-file") }}
           {% if form.img.errors %}
             {% for error in form.img.errors %}
               <span class="text-danger">{{ error }}</span></br>
             {% endfor %}
-          {% endif %}
+          {% endif %} -->
+
+          <!-- https://developer.mozilla.org/en-US/docs/Web/API/File/type -->
+          <img id="image-chosen" alt="your image" width="100" height="100" />
+          <input type="file" multiple onchange="uploadImage(this);">
+          <!-- Will take in all the images provided, and create a slideshow for each file (no matter the file extension) -->
+          <!-- TODO(FI): When u come across a pdf, have a pdf view -->
+          <!-- TODO(FI): When u come across an image, use an image tag -->
+          <!-- TODO(FI): When u come across a coding file, show a text editor maybe? -->
+          <!-- TODO(FI): When u get a zip file, just show zip icon (peek into zip files if its not too hard to do) -->
+          <!-- TODO(FI): When u get a video, show a video preview -->
+          <script>
+            function uploadImage(fileInput) {
+              let files = fileInput.files;
+              console.log("Files object:", files)
+
+              for (let i = 0; i < files.length; i++) {
+                console.log(files[i].name, files[i].type);
+              }
+
+              fileObject = window.URL.createObjectURL(files[0])
+              console.log(fileObject)
+
+              document.getElementById('image-chosen').src = fileObject
+              console.log("called function")
+            }
+          </script>
         </div>
 
       </fieldset>
