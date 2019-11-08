@@ -15,9 +15,9 @@ def root():
 def home():
     form = DataPostForm()
 
-    # If user isn't authenticated, the 'Join now' page will be rendered
+    # If user isn't authenticated, send to landing page
     if not current_user.is_authenticated:
-        return render_template('home.html')
+        return render_template('landing-page.html')
 
     # Return top url if pop button was pressed
     if form.pop_button.data:

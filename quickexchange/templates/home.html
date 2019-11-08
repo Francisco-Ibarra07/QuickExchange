@@ -1,8 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
 
-{% if current_user.is_authenticated %}
-  
   <div class="content-section">
     <form method="POST" action="" enctype="multipart/form-data">
       {{ form.hidden_tag() }}
@@ -69,10 +67,5 @@
     </div>
   </div>
 
-{% else %}
-  <div class="container">
-    <h1>You need to log in first before you start posting (Temp message)</h1>
-  </div>
-{% endif %}
 
 {% endblock content %}
