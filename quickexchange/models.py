@@ -12,12 +12,24 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
-    posts = db.relationship('Post', backref='author', lazy=True)
+    posts = db.relationship('DataPost', backref='author', lazy=True)
 
     # How our object is printed
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
+class DataPost(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    url = db.Column(db.String(100), default=None)
+    img_filename = db.Column(db.String(), default=None)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        if self.url:
+            return f"{self.url}"
+        else:
+            return f"{self.img_filename}"
 
 # Post as in Blog Post (not POST http)
 class Post(db.Model):
@@ -25,22 +37,10 @@ class Post(db.Model):
     title = db.Column(db.String(100), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     content = db.Column(db.Text, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
 
-class DataPost(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    url = db.Column(db.String(100), default=None)
-    img_filename = db.Column(db.String(), default=None)
-    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-
-    def __repr__(self):
-        if self.url:
-            return f"{self.url}"
-        else:
-            return f"{self.img_filename}"
 
 # Quick way to import models and test:
 # >>> from quickexchange.models import User, Post, DataPost
