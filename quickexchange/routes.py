@@ -15,9 +15,13 @@ def root():
 def home():
     form = DataPostForm()
 
+    # If user isn't authenticated, the 'Join now' page will be rendered
+    if not current_user.is_authenticated:
+        return render_template('home.html')
+
     # Return top url if pop button was pressed
     if form.pop_button.data:
-        last_post = DataPost.query.order_by(DataPost.id.desc()).first()
+        last_post = next(reversed(current_user.posts), None)
         if last_post is None:
             flash(f'No Data set yet. Set a new post then hit "Push" to store it', 'danger')
             return redirect(url_for('home'))
@@ -25,28 +29,30 @@ def home():
             return redirect(last_post.url)
         elif last_post.img_filename:
             image_file = url_for('static', filename='profile_pics/' + last_post.img_filename)
-            return render_template('preview-media.html', title='Preview Media', image_file=image_file, history=DataPost.query.order_by(DataPost.id.desc()).all())
+            return redirect(image_file)
     
     # If push button was pressed
     elif form.push_button.data:
         if form.img.data and form.url.data:
             flash(f'Looks like you are trying to submit two things. Choose one only!', 'danger')
         elif form.url.data:
-            # Create a new url post object and store it
-            new_data_post = DataPost(url=form.url.data)
+            
+            new_data_post = DataPost(url=form.url.data, author=current_user)
             db.session.add(new_data_post)
             db.session.commit()
             flash(f'New URL set to: {form.url.data}', 'success')
         elif form.img.data:
             picture_filename = save_picture(form.img.data)
-            new_data_post = DataPost(img_filename=picture_filename)
+            new_data_post = DataPost(img_filename=picture_filename, author=current_user)
             db.session.add(new_data_post)
             db.session.commit()
             flash(f'New image set!', 'success')
+        else:
+            flash(f'Nothing was submitted!', 'info')
 
         return redirect(url_for('home'))
     
-    return render_template('home.html', form=form, history=DataPost.query.order_by(DataPost.id.desc()).all())
+    return render_template('home.html', form=form, history=reversed(current_user.posts))
 
 @app.route("/about")
 def about():
