@@ -55,16 +55,23 @@
               const imageFileTypes = ["jpg", "png", "gif"];
               for (let file of files) {
                 console.log(file)
-                fileType = file.name.split('.').pop().toLowerCase()
+                fileType = file.name.split('.').pop().toLowerCase();
 
                 if (imageFileTypes.includes(fileType)) {
                   let img_element = document.createElement("img");
                   img_element.style.width = 50;
                   img_element.style.height = 50;
                   img_element.alt = "Your image";
-                  img_element.src = window.URL.createObjectURL(file)
+                  img_element.src = window.URL.createObjectURL(file);
                   
                   document.getElementById("media-files").appendChild(img_element);
+                  list.push(img_element);
+                }
+                else if (fileType === "pdf") {
+                  let pdf_element = document.createElement("embed");
+                  pdf_element.src = window.URL.createObjectURL(file);
+                  document.getElementById("media-files").appendChild(pdf_element);
+                  list.push(pdf_element);
                 }
                 
                 console.log(file.name, file.type);
