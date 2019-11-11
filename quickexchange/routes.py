@@ -102,7 +102,8 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
-# Randomizes picture file name to avoid collisions. Then saves image in db
+# Randomizes picture file name to avoid collisions. 
+# Saves image and returns new img name
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8) 
     f_name, f_ext = os.path.splitext(form_picture.filename)
