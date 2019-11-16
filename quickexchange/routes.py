@@ -54,6 +54,22 @@ def home():
     
     return render_template('home.html', form=form, history=reversed(current_user.posts))
 
+@app.route("/pop")
+@login_required
+def pop():
+    last_post = next(reversed(current_user.posts), None)
+    if last_post is None:
+        flash(f'There is nothing to pop yet', 'danger')
+        return redirect(url_for('home'))
+    elif last_post.url:
+        return redirect(last_post.url)
+    elif last_post.img_filename:
+        image_file = url_for('static', filename='profile_pics/' + last_post.img_filename)
+        return redirect(image_file)
+    else:
+        flash(f'Redirecting to home page', 'info')
+        return redirect(url_for('home'))
+
 @app.route("/about")
 def about():
     return render_template('about.html', title='About')
