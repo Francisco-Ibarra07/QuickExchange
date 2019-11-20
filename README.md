@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="quickexchange/static/QE.png"/>
+  <img src="quickexchange/static/img/QE.png"/>
 </p>
 
 # QuickExchange (Site is currently a work in progress)
