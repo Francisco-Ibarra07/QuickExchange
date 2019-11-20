@@ -1,4 +1,3 @@
-<!-- TODO(FI): Create a design for the landing page -->
 <!DOCTYPE html>
 <html>
 
@@ -9,7 +8,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link href="style.css" rel="stylesheet" />
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='landing-page.css') }}">
 
 </head>
@@ -29,17 +27,16 @@
           <span class="icon-bar"></span>
         </button>
         <!-- navbar-brand for logo images -->
-        <a class="navbar-brand" href="#">Quick Exchange</a>
+        <a class="navbar-brand" href="{{ url_for('home') }}">Quick Exchange</a>
       </div>
 
       <!-- Navigation buttons -->
       <div class="collapse navbar-collapse" id="navbar-collapse-main">
         <ul class="nav navbar-nav navbar-right">
-          <li><a class="active" href="#">Home</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Services</a></li>
-          <li><a href="#">Testimonials</a></li>
-          <li><a href="#">Contact</a></li>
+          <li><a class="active" href="{{ url_for('home') }}">Home</a></li>
+          <li><a href="{{ url_for('about') }}">About</a></li>
+          <li><a href="{{ url_for('login') }}">Login</a></li>
+          <li><a href="{{ url_for('register') }}">Register</a></li>
         </ul>
       </div>
     </div>
@@ -50,6 +47,7 @@
     <div class="landing-text">
       <h1>QUICK EXCHANGE</h1>
       <h3>Start exchanging files today!</h3>
+      <!-- TODO(FI): Make a popout of 3 options: login, register, show more below -->
       <a href="#" class="btn btn-default btn-lg">Get Started</a>
     </div>
   </div>
