@@ -27,7 +27,10 @@
           <span class="icon-bar"></span>
         </button>
         <!-- navbar-brand for logo images -->
-        <a class="navbar-brand" href="{{ url_for('home') }}">Quick Exchange</a>
+        <!-- <a class="navbar-brand" href="#"><img src="img/w3newbie.png"></a> -->
+        <a class="navbar-brand" href="{{ url_for('home') }}">
+          <span>Quick Exchange</span>
+        </a>
       </div>
 
       <!-- Navigation buttons -->
@@ -44,11 +47,13 @@
 
   <!-- Home image -->
   <div id="home">
-    <div class="landing-text">
-      <h1>QUICK EXCHANGE</h1>
-      <h3>Start exchanging files today!</h3>
-      <!-- TODO(FI): Make a popout of 3 options: login, register, show more below -->
-      <a href="#" class="btn btn-default btn-lg">Get Started</a>
+    <div class="home-wrapper">
+      <div class="landing-text">
+        <h1>QUICK EXCHANGE</h1>
+        <h3>Start exchanging files today!</h3>
+        <!-- TODO(FI): Make a popout of 3 options: login, register, show more below -->
+        <a href="#" class="btn btn-default btn-lg">Get Started</a>
+      </div>
     </div>
   </div>
 

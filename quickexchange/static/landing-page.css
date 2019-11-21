@@ -2,7 +2,6 @@ html, body {
 	height: 100%;
 	width: 100%;
 }
-
 .navbar {
 	background-color: #23415C;
 	padding: 1% 0;
@@ -11,6 +10,13 @@ html, body {
 .navbar-brand {
 	min-height: 55px;
 	padding: 0 15px 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: white;
+}
+.navbar-brand > span {
+	color: white;
 }
 .navbar-default .navbar-nav li a {
 	color: #d5d5d5;
@@ -21,21 +27,33 @@ html, body {
 
 #home {
 	background: url(img/laptop.jpg) no-repeat center center fixed;
-	display: table;
 	height: 100%;
-	position: relative;
 	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
 	background-size: cover;
 }
+.home-wrapper {
+	/* border: black dashed 1px; */
+	background-color: rgba(0, 0, 0, 0.562);
+	padding: 0 30px;
+	/* width: 50%; */
+}
 .landing-text {
-	display: table-cell;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	height: 100%;
+	padding-bottom: 20px;
+	color: white;
 	text-align: center;
-	vertical-align: middle;
 }
 .landing-text h1 {
-	font-size: 500%;
+	font-size: 60px;
 	font-weight: 700%;
-	color: #FFF;
 }
 
 .padding {
@@ -76,7 +94,7 @@ footer {
 /* mobile devices fixes */
 @media (max-width: 768px) {
 	.landing-text h1 {
-		font-size: 300%;
+		font-size: 48px;
 	}
 	.fa {
 		font-size: 20px;
