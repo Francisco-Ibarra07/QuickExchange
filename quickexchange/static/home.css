@@ -37,14 +37,22 @@ html, body {
   padding: 10px 20px;
   border: 1px solid #dddddd;
   border-radius: 3px;
-  margin-bottom: 20px;
+	margin-bottom: 20px;
+	width: 80%;
 }
-.content-section {
+.history-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+.history-section {
   background: #ffffff;
   padding: 10px 20px;
   border: 1px solid #dddddd;
   border-radius: 3px;
-  margin-bottom: 20px;
+	margin-bottom: 20px;
+	width: 80%;
 }
 
 .padding {
@@ -56,6 +64,9 @@ footer {
 	background-color: #23415C;
 	padding: 5% 5% 10% 5%;
 	color: #FFF;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
 .fa {
 	padding: 15px;
@@ -69,18 +80,13 @@ footer {
 .icon {
 	max-width: 200px;
 }
-
-/* mobile devices fixes */
-@media (max-width: 768px) {
-	.landing-text h1 {
-		font-size: 48px;
+.footer-contact > h4 {
+	font-size: 1em;
+}
+@media (min-width: 1024px) {
+	
+	.submit-form {
+		width: 600px;
 	}
-	.fa {
-		font-size: 20px;
-		padding: 10px;
-	}
-	.icon {
-		padding-top: 5%;
-		max-width: 100px;
-	}
+	
 }

@@ -45,32 +45,32 @@
   </nav>
 
   <!-- Main submit form section -->
-  <div id="main-form">    
+  <div id="main-form">
     <div class="submit-form">
       <form method="POST" action="" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
-  
+
         <fieldset class="form-group">
           <legend class="border-bottom mb-4">Submit a link!</legend>
-  
+
           <!-- Form for URL LINK -->
           <div class="form-group">
             {{ form.url.label(class="form-control-label") }}
-  
+
             {% if form.url.errors %}
-  
+
             {{ form.url(class="form-control form-control-lg is-invalid") }}
             <div class="invalid-feedback">
               {% for error in form.url.errors %}
               <span>{{ error }}</span>
               {% endfor %}
             </div>
-  
+
             {% else %}
             {{ form.url(class="form-control form-control-lg")}}
             {% endif %}
           </div>
-  
+
           <!-- Form group for any MEDIA FILES -->
           <div class="form-group" id="media-files">
             {{ form.img.label() }}
@@ -80,7 +80,7 @@
             <span class="text-danger">{{ error }}</span></br>
             {% endfor %}
             {% endif %}
-  
+
             <!-- https://developer.mozilla.org/en-US/docs/Web/API/File/type -->
             <!-- <input type="file" multiple onchange="uploadMedia(this);"> -->
             <!-- Will take in all the images provided, and create a slideshow for each file (no matter the file extension) -->
@@ -101,7 +101,7 @@
                 for (let file of files) {
                   console.log(file)
                   fileType = file.name.split('.').pop().toLowerCase();
-  
+
                   if (imageFileTypes.includes(fileType)) {
                     console.log("Image element");
                     let img_element = document.createElement("img");
@@ -109,7 +109,7 @@
                     img_element.style.height = 50;
                     img_element.alt = "Your image";
                     img_element.src = window.URL.createObjectURL(file);
-  
+
                     document.getElementById("media-files").appendChild(img_element);
                     list.push(img_element);
                   }
@@ -135,29 +135,29 @@
                     console.log("Language element");
                     let object_element = document.createElement("object");
                   }
-  
+
                   console.log("File type read:", fileType);
                   console.log(file.name, file.type);
                 }
               }
             </script>
           </div>
-  
+
         </fieldset>
-  
+
         <div class="form-group">
           {{ form.push_button(class="btn btn-outline-info") }}
           {{ form.pop_button(class="btn btn-outline-info") }}
         </div>
-  
+
       </form>
     </div>
   </div>
 
 
   <!-- History section -->
-  <div class="col-md-8">
-    <div class="content-section">
+  <div class="history-wrapper">
+    <div class="history-section">
       <h3>History</h3>
       <p class='text-muted'>Any recent links posted will be shown here.
         <ul class="list-group">
@@ -167,7 +167,7 @@
             <a class="nav-item nav-link" href="{{url}}">{{ url }}</a>
           </li>
           {% endfor %}
-
+  
           {% else %}
           <li class="list-group-item list-group-item-light">History is currently empty</li>
           {% endif %}
@@ -176,22 +176,21 @@
     </div>
   </div>
 
-
   <!-- Footer section -->
   <footer class="container-fluid text-center">
-    <div class="col-sm-4">
+    <div class="col-sm-4 footer-contact">
       <h3>Contact Us</h3>
       <br>
       <h4>Quick.Exchange.Contact@gmail.com</h4>
     </div>
-    <div class="col-sm-4">
+    <!-- <div class="col-sm-4">
       <h3>Connect</h3>
       <a href="#" class="fa fa-facebook"></a>
       <a href="#" class="fa fa-twitter"></a>
       <a href="#" class="fa fa-google"></a>
       <a href="#" class="fa fa-linkedin"></a>
       <a href="#" class="fa fa-youtube"></a>
-    </div>
+    </div> -->
     <div class="col-sm-4">
       <img src="static/img/b.png" class="icon">
     </div>
