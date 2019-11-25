@@ -51,7 +51,7 @@
         {{ form.hidden_tag() }}
 
         <fieldset class="form-group">
-          <legend class="border-bottom mb-4">Submit a link!</legend>
+          <legend class="border-bottom mb-4">Post something onto your stack!</legend>
 
           <!-- Form for URL LINK -->
           <div class="form-group">
@@ -145,9 +145,9 @@
 
         </fieldset>
 
-        <div class="form-group">
-          {{ form.push_button(class="btn btn-outline-info") }}
-          {{ form.pop_button(class="btn btn-outline-info") }}
+        <div class="form-group form-submit-buttons">
+          {{ form.push_button(class="btn btn-lg") }}
+          {{ form.pop_button(class="btn btn-lg") }}
         </div>
 
       </form>
