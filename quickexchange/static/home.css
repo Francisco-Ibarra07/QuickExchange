@@ -54,6 +54,9 @@ html, body {
 	margin-bottom: 20px;
 	width: 80%;
 }
+.list-group {
+	word-wrap: break-word;
+}
 
 .padding {
 	padding: 80px 0;
@@ -84,9 +87,14 @@ footer {
 	font-size: 1em;
 }
 @media (min-width: 1024px) {
-	
-	.submit-form {
+	.submit-form, .history-section {
 		width: 600px;
 	}
-	
+}
+
+@media (max-width: 510px) {
+	footer {
+		display: block;
+	}
+
 }
