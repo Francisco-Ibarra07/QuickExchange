@@ -14,8 +14,14 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue consectetur 
 * [SQLAlchemy](https://www.sqlalchemy.org)
 * [Bootstrap](https://getbootstrap.com)
 
+## Features
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue consectetur condimentum. Etiam euismod aliquet sem. Quisque auctor id ipsum ac faucibus. Donec varius rutrum eros, rhoncus faucibus purus eleifend vel. Curabitur venenatis luctus sem eu egestas. Cras quam sem, suscipit sed massa quis.
+
 ## Screenshots
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue consectetur condimentum. Etiam euismod aliquet sem. Quisque auctor id ipsum ac faucibus.
+<p align="center">
+  <img src="chome_extension/screenshots/extension-screenshot1.png"/>
+  <img src="chome_extension/screenshots/extension-screenshot2.png"/>
+</p>
 
 ## Installation
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue consectetur condimentum. Etiam euismod aliquet sem. Quisque auctor id ipsum ac faucibus. Donec varius rutrum eros, rhoncus faucibus purus eleifend vel. Curabitur venenatis luctus sem eu egestas. Cras quam sem, suscipit sed massa quis.
