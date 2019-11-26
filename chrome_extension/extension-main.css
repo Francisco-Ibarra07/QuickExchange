@@ -9,6 +9,10 @@ body{
   width: 100%;
 }
 .extension--push-button {
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  /* padding: 0 0px; */
   text-align: center;
 }
 .extension--show-history {
