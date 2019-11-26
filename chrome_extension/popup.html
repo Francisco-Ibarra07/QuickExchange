@@ -1,9 +1,47 @@
 <html>
-  <head>
-    <title>Water Popup</title>
-  </head>
-  <body>
-      <h1>Quick Exchange</h1>
-      <input type="file">
-  </body>
+
+<head>
+  <title>Quick Exhange - Popup</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="extension-main.css">
+
+</head>
+
+<body>
+
+  <!-- Navigation header section -->
+  <nav class="navbar fixed-top navbar-dark bg-primary justify-content-between">
+    <a class="navbar-brand" href="#">Quick Exchange</a>
+    <a class="navbar-brand" href="#">History</a>
+  </nav>
+
+  <!-- Main form which includes text box and file uploads -->
+  <div class="extension--main-form">
+    <form method="POST" action="" enctype="multipart/form-data">
+      
+      <!-- Url Input -->
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputEmail4">URL</label>
+          <input type="email" class="form-control" id="urlInput" placeholder="https://cool-website.com">
+        </div>
+      </div>
+
+      <!-- File Input -->
+      <div class="custom-file">
+        <input type="file" class="custom-file-input" id="customFile">
+        <label class="custom-file-label" for="customFile">Choose file</label>
+      </div>
+
+      <!-- Buttons to push/pop -->
+      <div class="form-buttons">
+        <button type="submit" class="btn btn-primary">Push</button>
+      </div>
+
+    </form>
+  </div>
+
+</body>
+
 </html>
