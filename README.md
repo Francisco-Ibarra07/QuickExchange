@@ -19,8 +19,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue consectetur 
 
 ## Screenshots
 <p align="center">
-  <img src="chome_extension/screenshots/extension-screenshot1.png"/>
-  <img src="chome_extension/screenshots/extension-screenshot2.png"/>
+  <img src="chrome_extension/screenshots/screenshot-extension-demo1.png"/>
+  <img src="chrome_extension/screenshots/screenshot-extension-demo2.png"/>
 </p>
 
 ## Installation
