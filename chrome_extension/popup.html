@@ -13,8 +13,8 @@
   <!-- Navigation header section -->
   <nav class="navbar fixed-top navbar-dark bg-primary justify-content-between">
     <a class="navbar-brand" href="#">
-        <img src="./favicon/favicon-32x32.png" width="30" height="30" class="d-inline-block align-top" alt=""> 
-        Quick Exchange
+      <img src="./favicon/favicon-32x32.png" width="30" height="30" class="d-inline-block align-top" alt="">
+      Quick Exchange
     </a>
     <a class="navbar-brand" href="#">History</a>
   </nav>
@@ -22,24 +22,25 @@
   <!-- Main form which includes text box and file uploads -->
   <div class="extension--main-form">
     <form method="POST" action="" enctype="multipart/form-data">
-      
+
       <!-- Url Input -->
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="inputEmail4">URL</label>
-          <input type="email" class="form-control" id="urlInput" placeholder="https://cool-website.com">
-        </div>
+      <div class="form-group">
+        <label for="inputEmail4">URL</label>
+        <input type="email" class="form-control" id="urlInput" placeholder="https://www.cool-website.com">
       </div>
 
       <!-- File Input -->
-      <div class="custom-file">
-        <input type="file" class="custom-file-input" id="customFile">
-        <label class="custom-file-label" for="customFile">Choose file(s)</label>
+      <div class="form-group">
+        <label for="inputEmail4">File Upload</label>
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" id="customFile">
+          <label class="custom-file-label" for="customFile">Choose file</label>
+        </div>
       </div>
-
+      
       <!-- Push Button -->
-      <div class="form-buttons">
-        <button type="submit" class="btn btn-primary">Push</button>
+      <div class="form-group extension--push-button">
+        <button type="submit" class="btn btn-outline-primary">Push</button>
       </div>
 
     </form>
@@ -58,7 +59,7 @@
         </div>
 
         <div class="col-2">
-            <button type="submit" class="btn btn-outline-primary">Pop</button>
+          <button type="submit" class="btn btn-outline-primary">Pop</button>
         </div>
       </div>
 
