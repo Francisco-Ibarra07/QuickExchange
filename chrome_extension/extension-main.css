@@ -5,9 +5,12 @@ body{
 
 .extension--main-form {
 	/* border: black dashed 2px; */
-  padding: 60px 10px 10px 10px;
+  padding: 65px 10px 10px 10px;
   width: 100%;
 }
 .extension--push-button {
+  text-align: center;
+}
+.extension--show-history {
   text-align: center;
 }

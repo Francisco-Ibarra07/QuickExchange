@@ -16,13 +16,11 @@
       <img src="./favicon/favicon-32x32.png" width="30" height="30" class="d-inline-block align-top" alt="">
       Quick Exchange
     </a>
-    <a class="navbar-brand" href="#">History</a>
   </nav>
 
-  <!-- Main form which includes text box and file uploads -->
+  <!-- Main form which includes text box, file uploads, media stored, and history -->
   <div class="extension--main-form">
     <form method="POST" action="" enctype="multipart/form-data">
-
       <!-- Url Input -->
       <div class="form-group">
         <label for="inputEmail4">URL</label>
@@ -42,11 +40,9 @@
       <div class="form-group extension--push-button">
         <button type="submit" class="btn btn-outline-primary">Push</button>
       </div>
-
     </form>
 
     <form method="GET" action="" enctype="multipart/form-data">
-
       <!-- Current media stored section-->
       <label>Current stored media</label>
       <div class="form-row">
@@ -62,9 +58,11 @@
           <button type="submit" class="btn btn-outline-primary">Pop</button>
         </div>
       </div>
-
     </form>
 
+    <div class="extension--show-history">
+        <a href="#">Show my recent history</a>
+    </div>
   </div>
 
 </body>
