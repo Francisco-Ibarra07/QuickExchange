@@ -34,10 +34,10 @@
       <!-- File Input -->
       <div class="custom-file">
         <input type="file" class="custom-file-input" id="customFile">
-        <label class="custom-file-label" for="customFile">Choose file</label>
+        <label class="custom-file-label" for="customFile">Choose file(s)</label>
       </div>
 
-      <!-- Buttons to push/pop -->
+      <!-- Push Button -->
       <div class="form-buttons">
         <button type="submit" class="btn btn-primary">Push</button>
       </div>
@@ -46,17 +46,20 @@
 
     <form method="GET" action="" enctype="multipart/form-data">
 
-      <!-- Current media stored -->
+      <!-- Current media stored section-->
+      <label>Current stored media</label>
       <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="inputEmail4">Current stored media</label>
-          <input type="email" class="form-control" id="media" placeholder="https://cool-website.com">
+        <div class="col-8">
+          <input class="form-control" type="text" placeholder="https://www.cool-website.com" readonly>
         </div>
-      </div>
 
-      <!-- Pop button -->
-      <div class="form-buttons">
-        <button type="submit" class="btn btn-primary">Push</button>
+        <div class="col-2">
+          <button type="submit" class="btn btn-outline-info">Copy</button>
+        </div>
+
+        <div class="col-2">
+            <button type="submit" class="btn btn-outline-primary">Pop</button>
+        </div>
       </div>
 
     </form>
