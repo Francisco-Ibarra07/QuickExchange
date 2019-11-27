@@ -1,7 +1,7 @@
 import os
 import secrets
 from PIL import Image
-from flask import render_template, url_for, flash, redirect, request
+from flask import render_template, url_for, flash, redirect, request, jsonify
 from quickexchange import app, bcrypt, db
 from quickexchange.forms import RegistrationForm, LoginForm, UpdateAccountForm, DataPostForm, PostForm
 from quickexchange.models import User, Post, DataPost
@@ -29,6 +29,7 @@ def home():
             return redirect(last_post.url)
         elif last_post.img_filename:
             image_file = url_for('static', filename='profile_pics/' + last_post.img_filename)
+            print(image_file)
             return redirect(image_file)
     
     # If push button was pressed
@@ -53,26 +54,6 @@ def home():
         return redirect(url_for('home'))
     
     return render_template('home.html', form=form, history=reversed(current_user.posts))
-
-@app.route("/pop")
-@login_required
-def pop():
-    last_post = next(reversed(current_user.posts), None)
-    if last_post is None:
-        flash(f'There is nothing to pop yet', 'danger')
-        return redirect(url_for('home'))
-    elif last_post.url:
-        return redirect(last_post.url)
-    elif last_post.img_filename:
-        image_file = url_for('static', filename='profile_pics/' + last_post.img_filename)
-        return redirect(image_file)
-    else:
-        flash(f'Redirecting to home page', 'info')
-        return redirect(url_for('home'))
-
-@app.route("/about")
-def about():
-    return render_template('about.html', title='About')
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -125,12 +106,6 @@ def save_picture(form_picture):
     f_name, f_ext = os.path.splitext(form_picture.filename)
     picture_filename = random_hex + f_ext
     picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_filename)
-    
-    # Resize img using Pillow module
-    # output_size = (125, 125)
-    # i = Image.open(form_picture)
-    # i.thumbnail(output_size)
-    # i.save(picture_path)
 
     form_picture.save(picture_path)
 
@@ -158,3 +133,39 @@ def account():
 
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('account.html', title='Account', image_file=image_file, form=form)
+
+@app.route("/about")
+def about():
+    return render_template('about.html', title='About')
+
+@app.route("/get-latest-post")
+def get_latest_post():
+    # Make sure user email is passed in
+    request_data = request.get_json()
+    user_email = request_data['email']
+    if user_email is None:
+        return jsonify({'message': 'email not supplied'}), 400
+
+    # Make sure user exists
+    target_user = User.query.filter_by(email=user_email).first()
+    if target_user is None:
+        return jsonify({'message': 'user does not exist'}), 400
+
+    # Return latest post if user exists
+    latest_post = next(reversed(target_user.posts), None)
+    if latest_post is None:
+        return jsonify({'message': 'user is yet to make their first post'}), 400
+    elif latest_post.url:
+        return jsonify({
+            'message': 'post found',
+            'type': 'url',
+            'url': latest_post.url
+        }), 200
+    elif latest_post.img_filename:
+        return jsonify({
+            'message': 'post found',
+            'type': 'url',
+            'url': url_for('static', filename='profile_pics/' + latest_post.img_filename)
+        }), 200
+    else:
+        return jsonify({'message': 'error: couldnt determine if url or image file'}), 500
