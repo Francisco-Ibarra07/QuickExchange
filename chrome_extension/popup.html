@@ -13,7 +13,8 @@
   <!-- Navigation header section -->
   <nav class="navbar fixed-top navbar-dark bg-primary justify-content-between">
     <a class="navbar-brand" href="#">
-      <img style="padding: 0px 10px 0px 0px;" src="./favicon/favicon-32x32.png" width="32" height="32" class="d-inline-block align-top" alt="">
+      <img style="padding: 0px 10px 0px 0px;" src="./favicon/favicon-32x32.png" width="32" height="32"
+        class="d-inline-block align-top" alt="">
       Quick Exchange
     </a>
   </nav>
@@ -42,29 +43,32 @@
       </div>
     </form>
 
-    <form method="GET" action="" enctype="multipart/form-data">
-      <!-- Current media stored section-->
+
+    <!-- Current media stored section-->
+    <div class="extension--current-media-stored">
       <label>Current stored media</label>
       <div class="form-row">
         <div class="col-8">
-          <input class="form-control" type="text" placeholder="https://www.cool-website.com" readonly>
+          <textarea rows="1" cols="8" id="currentStoredMediaBox" class="form-control" type="text" placeholder="URL placeholder" readonly>https://www.cool-website.com</textarea>
         </div>
 
         <div class="col-2">
-          <button type="submit" class="btn btn-outline-info">Copy</button>
+          <button type="button" id="copyButton" class="btn btn-outline-info">Copy</button>
         </div>
 
         <div class="col-2">
           <button type="submit" class="btn btn-primary">Pop</button>
         </div>
       </div>
-    </form>
+    </div>
+
 
     <div class="extension--show-history">
       <a href="#">Show my recent history</a>
     </div>
   </div>
 
+  <script type="text/javascript" src="popup.js"></script>
 </body>
 
 </html>

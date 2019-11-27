@@ -1,4 +1,4 @@
-console.log("Background script running");
+console.log("Background script running!");
 
 chrome.browserAction.onClicked.addListener(extensionButtonClicked);
 chrome.browserAction.setBadgeText({text: "hi"}); // We have 10+ unread items.

@@ -15,6 +15,9 @@ body{
   /* padding: 0 0px; */
   text-align: center;
 }
+.extension--current-media-stored {
+  padding: 0px 0px 15px 0px;
+}
 .extension--show-history {
   text-align: center;
 }
