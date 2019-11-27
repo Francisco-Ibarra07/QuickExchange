@@ -18,10 +18,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue consectetur 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue consectetur condimentum. Etiam euismod aliquet sem. Quisque auctor id ipsum ac faucibus. Donec varius rutrum eros, rhoncus faucibus purus eleifend vel. Curabitur venenatis luctus sem eu egestas. Cras quam sem, suscipit sed massa quis.
 
 ## Screenshots
-<p align="center">
-  <img src="chrome_extension/screenshots/screenshot-extension-demo1.png"/>
-  <img src="chrome_extension/screenshots/screenshot-extension-demo2.png"/>
-</p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue consectetur condimentum. Etiam euismod aliquet sem. Quisque auctor id ipsum ac faucibus. Donec varius rutrum eros, rhoncus faucibus purus eleifend vel. Curabitur venenatis luctus sem eu egestas. Cras quam sem, suscipit sed massa quis.
 
 ## Installation
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue consectetur condimentum. Etiam euismod aliquet sem. Quisque auctor id ipsum ac faucibus. Donec varius rutrum eros, rhoncus faucibus purus eleifend vel. Curabitur venenatis luctus sem eu egestas. Cras quam sem, suscipit sed massa quis.
