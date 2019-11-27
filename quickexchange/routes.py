@@ -141,8 +141,8 @@ def about():
 @app.route("/get-latest-post")
 def get_latest_post():
     # Make sure user email is passed in
-    request_data = request.get_json()
-    user_email = request_data['email']
+    user_email = request.args.get('email')
+    print(f"User email: {user_email}")
     if user_email is None:
         return jsonify({'message': 'email not supplied'}), 400
 
@@ -162,10 +162,12 @@ def get_latest_post():
             'url': latest_post.url
         }), 200
     elif latest_post.img_filename:
+        img_url = url_for('static', filename='profile_pics/' + latest_post.img_filename)
+        url_for_TESTING = f'http://127.0.0.1:8080{img_url}'
         return jsonify({
             'message': 'post found',
             'type': 'url',
-            'url': url_for('static', filename='profile_pics/' + latest_post.img_filename)
+            'url': url_for_TESTING
         }), 200
     else:
         return jsonify({'message': 'error: couldnt determine if url or image file'}), 500
