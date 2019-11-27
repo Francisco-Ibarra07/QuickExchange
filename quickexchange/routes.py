@@ -171,3 +171,40 @@ def get_latest_post():
         }), 200
     else:
         return jsonify({'message': 'error: couldnt determine if url or image file'}), 500
+
+# Inputs -> file and url keys
+# In Between-> Validate input, and store something if correct
+# Output -> success or failure message
+@app.route("/set-post", methods=['GET','POST'])
+def set_post():
+    
+    # Have silent set to true so it can return None if DNE
+    request_data = request.get_json(silent=True)
+
+    # Make sure an email is provided so we can find the user
+    if 'email' not in request_data:
+        return jsonify({'message': 'email not supplied'}), 400
+
+    # Make sure either url or file is given
+    if 'url' not in request_data:
+        return jsonify({'message': 'url not supplied'}), 400
+
+    url = request_data['url']
+    user_email = request_data['email']
+
+    # Make sure user exists
+    target_user = User.query.filter_by(email=user_email).first()
+    if target_user is None:
+        return jsonify({'message': 'user does not exist'}), 400
+    
+    # Save the new datapost and author it with the requested user
+    try:
+        new_data_post = DataPost(url=url, author=target_user)
+        db.session.add(new_data_post)
+        db.session.commit()
+        return jsonify({
+            'message': 'new post created',
+            'url': url
+        }), 200
+    except:
+        return jsonify({'message': 'error on creating new post'}), 500
