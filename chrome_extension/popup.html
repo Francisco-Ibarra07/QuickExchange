@@ -5,7 +5,6 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="extension-main.css">
-
 </head>
 
 <body>
@@ -21,31 +20,30 @@
 
   <!-- Main form which includes text box, file uploads, media stored, and history -->
   <div class="extension--main-form">
-    <form method="POST" action="" enctype="multipart/form-data">
+    <div class="extension--push-form">
       <!-- Url Input -->
       <div class="form-group">
-        <label for="inputEmail4">URL</label>
-        <input type="url" class="form-control" id="urlInput" placeholder="https://www.cool-website.com">
+        <label for="urlInput">URL</label>
+        <input type="url" id="urlInput" class="form-control" placeholder="https://www.cool-website.com">
       </div>
 
       <!-- File Input -->
       <div class="form-group">
-        <label for="inputEmail4">File Upload</label>
+        <label>File Upload</label>
         <div class="custom-file">
-          <input type="file" class="custom-file-input" id="customFile">
-          <label class="custom-file-label" for="customFile">Choose file</label>
+          <input type="file" id="fileInput" class="custom-file-input">
+          <label class="custom-file-label">Choose file</label>
         </div>
       </div>
 
       <!-- Push Button -->
       <div class="from-group extension--push-button">
-        <button type="submit" class="btn btn-primary">Push</button>
+        <button id="pushButton" class="btn btn-primary">Push</button>
       </div>
-    </form>
-
+    </div>
 
     <!-- Current media stored section-->
-    <div class="extension--current-media-stored">
+    <div class="extension--pop-form">
       <label>Current stored media</label>
       <div class="form-row">
         <div class="col-8">
@@ -61,7 +59,6 @@
         </div>
       </div>
     </div>
-
 
     <div class="extension--show-history">
       <a href="#">Show my recent history</a>

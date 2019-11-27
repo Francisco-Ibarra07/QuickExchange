@@ -8,6 +8,9 @@ body{
   padding: 65px 10px 10px 10px;
   width: 100%;
 }
+.extension--push-form {
+	/* border: black dashed 2px; */
+}
 .extension--push-button {
   /* display: flex;
   justify-content: center;
@@ -15,7 +18,7 @@ body{
   /* padding: 0 0px; */
   text-align: center;
 }
-.extension--current-media-stored {
+.extension--pop-form {
   padding: 0px 0px 15px 0px;
 }
 .extension--show-history {
