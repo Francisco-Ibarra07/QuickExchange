@@ -31,6 +31,17 @@ class DataPost(db.Model):
             print("Both args are None")
             return
         
+        # Check size of current posts
+        # If greater than max posts, delete the oldest
+        max_posts = 10
+        # TODO(FI): If deleting something like a file, delete it from storage also
+        if (len(author.posts) >= max_posts):
+            print(f'From {author.posts}')
+            print(f'Deleting: {author.posts[0]}')
+            deleteMe = author.posts.pop(0)
+            db.session.delete(deleteMe)
+
+        # Add new url or file post
         new_data_post = None
         if url is not None:
             new_data_post = cls(url=url, author=author)
