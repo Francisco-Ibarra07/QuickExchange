@@ -159,20 +159,19 @@
   <div class="history-wrapper">
     <div class="history-section">
       <h3>History</h3>
-      <p class='text-muted'>Up to 10 of your most recent posts will be displayed here.
-        <ul class="list-group scrollable-list">
-          {% if history %}
-          {% for url in history %}
-          <li class="list-group-item list-group-item-light">
-            <a class="nav-item nav-link" href="{{url}}">{{ url }}</a>
-          </li>
-          {% endfor %}
-  
-          {% else %}
-          <li class="list-group-item list-group-item-light">History is currently empty</li>
-          {% endif %}
-        </ul>
-      </p>
+      {% if history %}
+        <p class='text-muted'>Up to 10 of your most recent posts will be displayed here.
+          <ul class="list-group scrollable-list">
+            {% for url in history %}
+            <li class="list-group-item list-group-item-light">
+              <a class="nav-item nav-link" href="{{url}}">{{ url }}</a>
+            </li>
+            {% endfor %}  
+          </ul>
+        </p>
+      {% else %}
+        <p class='text-muted'>History is currently empty.
+      {% endif %}
     </div>
   </div>
 
