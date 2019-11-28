@@ -1,3 +1,4 @@
+// BUG(FI): When there are no posts yet in the users account, things don't get displayed properly
 console.log("Popup.js running");
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -10,22 +11,26 @@ document.addEventListener('DOMContentLoaded', function () {
 // Fetch latest post url from Flask route
 async function populateTextAreaElement() {
   try {
-    const TEST_EMAIL = 'hmd@m.com';
+    const TEST_EMAIL = 'test@m.com';
     const response = await fetch('http://127.0.0.1:8080/get-latest-post?email=' + TEST_EMAIL);
     const data = await response.json();
 
-    // console.log("Data recieved:");
-    // console.log(JSON.stringify(data));
-
+    let textareaElement = document.getElementById("currentStoredMediaBox");
     // Set textarea value to fetched url
     if (data.hasOwnProperty('url')) {
-      // console.log('url property: ', data['url']);
-      let textareaElement = document.getElementById("currentStoredMediaBox");
       textareaElement.value = data['url'];
-    } else {
-      console.log('url property not found in: ', data);
+    } 
+    else if(data.hasOwnProperty('message')) {
+      const message = data['message'];
+      if (message.includes("no posts found")) {
+        textareaElement.placeholder = "Your first post will appear here!";
+      } else {
+        console.log("Message received: ", message);
+      }
+    } 
+    else {
+      console.log('url or message property not found in: ', data);
     }
-
   } catch (error) {
     console.log(error);
   }
@@ -87,7 +92,7 @@ async function pushButtonClickHandler(event) {
   try {
     // Create json data for post request
     // TODO(FI): Replace test email with actual email
-    const TEST_EMAIL = "hmd@m.com";
+    const TEST_EMAIL = "test@m.com";
     const dataToSend = {
       "url": urlInput,
       "email": TEST_EMAIL
