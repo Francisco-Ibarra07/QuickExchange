@@ -1,4 +1,3 @@
-// BUG(FI): When there are no posts yet in the users account, things don't get displayed properly
 console.log("Popup.js running");
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -19,16 +18,7 @@ async function populateTextAreaElement() {
     // Set textarea value to fetched url
     if (data.hasOwnProperty('url')) {
       textareaElement.value = data['url'];
-    } 
-    else if(data.hasOwnProperty('message')) {
-      const message = data['message'];
-      if (message.includes("no posts found")) {
-        textareaElement.placeholder = "Your first post will appear here!";
-      } else {
-        console.log("Message received: ", message);
-      }
-    } 
-    else {
+    } else {
       console.log('url or message property not found in: ', data);
     }
   } catch (error) {
