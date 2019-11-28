@@ -57,6 +57,10 @@ html, body {
 .list-group {
 	word-wrap: break-word;
 }
+.scrollable-list {
+	overflow: auto;
+	max-height: 210px;
+}
 
 .padding {
 	padding: 80px 0;
