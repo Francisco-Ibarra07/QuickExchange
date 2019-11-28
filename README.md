@@ -30,9 +30,7 @@ As an authenticated user I should be able to:
 - Preview a file before I choose to upload it/push it.
 - Preview a url link before I choose to upload it.
 - Preview a file/link before accessing.
-- Add and keep a friends list.
 - Login once and keep me logged in.
-- Choose a friend who I can send a file/url link to.
 - See my history of my recent activities (uploading and accessing files).
 - Keep a basic profile page where I can update my email, display name, and profile picture.
 - Have a chrome extension that allows me to interact with the app without having to go to the website.
