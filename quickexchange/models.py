@@ -25,6 +25,22 @@ class DataPost(db.Model):
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
+    @classmethod
+    def create_new_data_post(cls, author, url=None, img_filename=None):
+        if (url is None) and (img_filename is None):
+            print("Both args are None")
+            return
+        
+        new_data_post = None
+        if url is not None:
+            new_data_post = cls(url=url, author=author)
+        elif img_filename is not None:
+            new_data_post = cls(img_filename=img_filename, author=author)
+        
+        db.session.add(new_data_post)
+        db.session.commit()
+        return new_data_post
+
     def __repr__(self):
         if self.url:
             return f"{self.url}"

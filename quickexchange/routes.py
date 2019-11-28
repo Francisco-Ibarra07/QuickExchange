@@ -29,7 +29,6 @@ def home():
             return redirect(last_post.url)
         elif last_post.img_filename:
             image_file = url_for('static', filename='profile_pics/' + last_post.img_filename)
-            print(image_file)
             return redirect(image_file)
     
     # If push button was pressed
@@ -37,23 +36,18 @@ def home():
         if form.img.data and form.url.data:
             flash(f'Looks like you are trying to submit two things. Choose one only!', 'danger')
         elif form.url.data:
-            
-            new_data_post = DataPost(url=form.url.data, author=current_user)
-            db.session.add(new_data_post)
-            db.session.commit()
+            DataPost.create_new_data_post(url=form.url.data, author=current_user)
             flash(f'New URL set to: {form.url.data}', 'success')
         elif form.img.data:
             picture_filename = save_picture(form.img.data)
-            new_data_post = DataPost(img_filename=picture_filename, author=current_user)
-            db.session.add(new_data_post)
-            db.session.commit()
+            DataPost.create_new_data_post(img_filename=picture_filename, author=current_user)
             flash(f'New image set!', 'success')
         else:
             flash(f'Nothing was submitted!', 'info')
-
         return redirect(url_for('home'))
-    
-    return render_template('home.html', form=form, history=reversed(current_user.posts))
+
+    history = reversed(current_user.posts) if len(current_user.posts) > 0 else None
+    return render_template('home.html', form=form, history=history)
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -154,7 +148,7 @@ def get_latest_post():
     # Return latest post if user exists
     latest_post = next(reversed(target_user.posts), None)
     if latest_post is None:
-        return jsonify({'message': 'user is yet to make their first post'}), 400
+        return jsonify({'message': 'no posts found'})
     elif latest_post.url:
         return jsonify({
             'message': 'post found',
@@ -199,9 +193,7 @@ def set_post():
     
     # Save the new datapost and author it with the requested user
     try:
-        new_data_post = DataPost(url=url, author=target_user)
-        db.session.add(new_data_post)
-        db.session.commit()
+        DataPost.create_new_data_post(url=url, author=target_user)
         return jsonify({
             'message': 'new post created',
             'url': url
