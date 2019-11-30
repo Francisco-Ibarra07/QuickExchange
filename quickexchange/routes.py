@@ -1,5 +1,7 @@
 import os
+import jwt
 import secrets
+import datetime
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, jsonify
 from quickexchange import app, bcrypt, db
@@ -48,6 +50,28 @@ def home():
 
     history = reversed(current_user.posts) if len(current_user.posts) > 0 else None
     return render_template('home.html', form=form, history=history)
+
+@app.route("/auth")
+def authenticate():
+    auth = request.authorization
+    if not auth or not auth.username or not auth.password:
+        return jsonify({'message': 'incorrect inputs'}), 401
+    
+    user = User.query.filter_by(email=auth.username).first()
+
+    if user is None:
+        return jsonify({'message': 'user does not exist!'}), 401
+
+    # Create and return new token if credentials pass
+    if bcrypt.check_password_hash(user.password, auth.password):
+        token = jwt.encode({
+            'user': user.email,
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=1)
+        }, app.config['SECRET_KEY'])
+        return jsonify({'token': token.decode('UTF-8')})
+    else:
+        return jsonify({'message': 'Login Unsuccessful. Please check email and password'}), 401
+
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
