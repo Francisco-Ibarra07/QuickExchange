@@ -5,7 +5,46 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById("popButton").addEventListener("click", popButtonClickHandler);
   document.getElementById("pushButton").addEventListener("click", pushButtonClickHandler);
   populateTextAreaElement();
+
+  //test
+  //getToken();
 });
+
+async function getToken() {
+
+  try {
+    const username = "hmd@m.com";
+    const password = "asdf";
+    const response = await fetch('http://127.0.0.1:8080/auth', { 
+      headers: new Headers({
+        'Authorization': 'Basic '+ btoa(username + ':' + password), 
+        'Content-Type': 'application/x-www-form-urlencoded'
+      })
+    });
+
+    const data = await response.json();
+    console.log(data);
+
+    // Store token if it was given
+    if (data.hasOwnProperty('token')) {
+      const token = data['token'];
+      // How to store
+      // await chrome.storage.sync.set({"token": token}, function() {
+      //   console.log("Value stored!");
+      // });
+
+      // How to retrieve
+      await chrome.storage.sync.get(['token'], function(result) {
+        console.log("Result:",result);
+      });
+    }
+
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 
 // Fetch latest post url from Flask route
 async function populateTextAreaElement() {

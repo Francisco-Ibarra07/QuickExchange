@@ -18,5 +18,8 @@
     "default_icon": "favicon/favicon-16x16.png",
     "default_popup": "popup.html",
     "default_title": "QuickExchange"
-  }
+  },
+  "permissions": [
+    "storage"
+  ]
 }
