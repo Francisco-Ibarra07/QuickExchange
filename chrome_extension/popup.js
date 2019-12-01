@@ -1,5 +1,8 @@
 console.log("Popup.js running");
 
+const TEST_EMAIL = "hmd@m.com";
+const TEST_PASS = "asdf";
+
 document.addEventListener('DOMContentLoaded', function () {
   document.getElementById("copyButton").addEventListener("click", copyButtonClickHandler);
   document.getElementById("popButton").addEventListener("click", popButtonClickHandler);
@@ -13,8 +16,8 @@ document.addEventListener('DOMContentLoaded', function () {
 async function getToken() {
 
   try {
-    const username = "hmd@m.com";
-    const password = "asdf";
+    const username = TEST_EMAIL;
+    const password = TEST_PASS;
     const response = await fetch('http://127.0.0.1:8080/auth', { 
       headers: new Headers({
         'Authorization': 'Basic '+ btoa(username + ':' + password), 
@@ -49,7 +52,6 @@ async function getToken() {
 // Fetch latest post url from Flask route
 async function populateTextAreaElement() {
   try {
-    const TEST_EMAIL = 'test@m.com';
     const response = await fetch('http://127.0.0.1:8080/get-latest-post?email=' + TEST_EMAIL);
     const data = await response.json();
 
@@ -121,7 +123,6 @@ async function pushButtonClickHandler(event) {
   try {
     // Create json data for post request
     // TODO(FI): Replace test email with actual email
-    const TEST_EMAIL = "test@m.com";
     const dataToSend = {
       "url": urlInput,
       "email": TEST_EMAIL
