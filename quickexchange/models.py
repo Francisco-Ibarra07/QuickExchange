@@ -36,8 +36,8 @@ class DataPost(db.Model):
         max_posts = 10
         # TODO(FI): If deleting something like a file, delete it from storage also
         if (len(author.posts) >= max_posts):
-            print(f'From {author.posts}')
-            print(f'Deleting: {author.posts[0]}')
+            # print(f'From {author.posts}')
+            # print(f'Deleting: {author.posts[0]}')
             deleteMe = author.posts.pop(0)
             db.session.delete(deleteMe)
 

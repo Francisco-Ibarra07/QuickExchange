@@ -160,7 +160,6 @@ def about():
 def get_latest_post():
     # Make sure user email is passed in
     user_email = request.args.get('email')
-    print(f"User email: {user_email}")
     if user_email is None:
         return jsonify({'message': 'email not supplied'}), 400
 
@@ -198,29 +197,48 @@ def set_post():
     
     # Have silent set to true so it can return None if DNE
     request_data = request.get_json(silent=True)
+    if request_data is None:
+        print('no data supplied')
+        return jsonify({'message': 'no data supplied'}), 400
 
     # Make sure an email is provided so we can find the user
     if 'email' not in request_data:
+        print('email not supplied')
         return jsonify({'message': 'email not supplied'}), 400
 
-    # Make sure either url or file is given
-    if 'url' not in request_data:
-        return jsonify({'message': 'url not supplied'}), 400
-
-    url = request_data['url']
-    user_email = request_data['email']
+    # Make sure either url or file is given (but not both)
+    if 'url' not in request_data and 'file' not in request_data:
+        return jsonify({'message': 'Neither a url or file was supplied'}), 400
+    elif 'url' in request_data and 'file' in request_data:
+        return jsonify({'message': 'Both url and file were supplied. Only one is allowed at a time'}), 400
 
     # Make sure user exists
+    user_email = request_data['email']
     target_user = User.query.filter_by(email=user_email).first()
     if target_user is None:
+        print('user does not exist')
         return jsonify({'message': 'user does not exist'}), 400
     
     # Save the new datapost and author it with the requested user
     try:
-        DataPost.create_new_data_post(url=url, author=target_user)
-        return jsonify({
-            'message': 'new post created',
-            'url': url
-        }), 200
+        response = {}
+        if 'url' in request_data:
+            print(f'url supplied: {request_data["url"]}')
+            DataPost.create_new_data_post(url=request_data['url'], author=target_user)
+            response = {
+                'message': 'new post created',
+                'url': request_data['url']
+            }
+        elif 'file' in request_data:
+            print(request_data['file'])
+            #DataPost.create_new_data_post(url=request_data['url'], author=target_user)
+            response = {
+                'message': 'new post created',
+                'url': request_data['file']
+            }
+
+        return jsonify(response), 200
+
     except:
+        print('error on creating new post')
         return jsonify({'message': 'error on creating new post'}), 500
