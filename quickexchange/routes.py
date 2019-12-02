@@ -189,11 +189,55 @@ def get_latest_post():
     else:
         return jsonify({'message': 'error: couldnt determine if url or image file'}), 500
 
-# Inputs -> file and url keys
-# In Between-> Validate input, and store something if correct
+# Inputs -> File and form data
+# In betwee, -> Validate file(s) and user. Store new file if its correct
+# Output -> Sucess or failure message
+@app.route("/create-file-post", methods=['GET', 'POST'])
+def create_file_post():
+    
+    # Get input files
+    request_file_data = request.files
+    request_form_data = request.form
+    print(request_file_data)
+    print(request_form_data)
+
+    if request_file_data is None or request_form_data is None:
+        print('no file data or form data supplied')
+        return jsonify({'message': 'no files or form data supplied'}), 400
+    
+    # Make sure an email is provided so we can find the user
+    # Make sure an actual file is passed in
+    file = request_file_data.get("file")
+    user_email = request_form_data.get("email")
+    if file is None or user_email is None:
+        print('no file or email supplied')
+        return jsonify({'message': 'no file or email was supplied'}), 400
+    
+    # Make sure user exists
+    target_user = User.query.filter_by(email=user_email).first()
+    if target_user is None:
+        print('user does not exist')
+        return jsonify({'message': 'user does not exist'}), 400
+    
+    # Save the new datapost and author it with the requested user
+    try:
+        # TODO(FI): Save image to a better location and check for validation of file (i.e file name, size, extension type)
+        # Also delete image from folder once it comes time to DELETE!
+        picture_filename = save_picture(file)
+        print("was able to return from save_picture")
+        print(picture_filename)
+        DataPost.create_new_data_post(img_filename=picture_filename, author=target_user)
+        print('created post')
+        return jsonify({'message': 'new post created'}), 200
+    except:
+        print('error on creating new post')
+        return jsonify({'message': 'error on creating new post'}), 500  
+
+# Inputs -> url key
+# In Between-> Validate input, and store url if correct
 # Output -> success or failure message
-@app.route("/set-post", methods=['GET','POST'])
-def set_post():
+@app.route("/create-url-post", methods=['GET','POST'])
+def create_url_post():
     
     # Have silent set to true so it can return None if DNE
     request_data = request.get_json(silent=True)
@@ -207,10 +251,8 @@ def set_post():
         return jsonify({'message': 'email not supplied'}), 400
 
     # Make sure either url or file is given (but not both)
-    if 'url' not in request_data and 'file' not in request_data:
-        return jsonify({'message': 'Neither a url or file was supplied'}), 400
-    elif 'url' in request_data and 'file' in request_data:
-        return jsonify({'message': 'Both url and file were supplied. Only one is allowed at a time'}), 400
+    if 'url' not in request_data:
+        return jsonify({'message': 'url was not supplied'}), 400
 
     # Make sure user exists
     user_email = request_data['email']
@@ -221,24 +263,12 @@ def set_post():
     
     # Save the new datapost and author it with the requested user
     try:
-        response = {}
-        if 'url' in request_data:
-            print(f'url supplied: {request_data["url"]}')
-            DataPost.create_new_data_post(url=request_data['url'], author=target_user)
-            response = {
-                'message': 'new post created',
-                'url': request_data['url']
-            }
-        elif 'file' in request_data:
-            print(request_data['file'])
-            #DataPost.create_new_data_post(url=request_data['url'], author=target_user)
-            response = {
-                'message': 'new post created',
-                'url': request_data['file']
-            }
-
-        return jsonify(response), 200
-
+        print(f'url supplied: {request_data["url"]}')
+        DataPost.create_new_data_post(url=request_data['url'], author=target_user)
+        return jsonify({
+            'message': 'new post created',
+            'url': request_data['url']
+        }), 200
     except:
         print('error on creating new post')
         return jsonify({'message': 'error on creating new post'}), 500

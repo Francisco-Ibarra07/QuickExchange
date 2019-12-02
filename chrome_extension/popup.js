@@ -121,6 +121,7 @@ async function pushButtonClickHandler(event) {
   }
 
   let fetchRequestData = undefined;
+  let targetUrl = undefined;
   if (urlInput !== '') {
 
     if (!isValidUrl(urlInput)) {
@@ -128,6 +129,7 @@ async function pushButtonClickHandler(event) {
       return;
     }
 
+    targetUrl = 'http://127.0.0.1:8080/create-url-post'
     fetchRequestData = {
       method: 'POST',
       headers: {
@@ -144,25 +146,24 @@ async function pushButtonClickHandler(event) {
     formData.append('email', TEST_EMAIL);
     formData.append('file', fileInput[0]);
 
+    targetUrl = 'http://127.0.0.1:8080/create-file-post'
     fetchRequestData = {
       method: 'POST',
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      },
       body: formData
     }
   }
 
   console.log("Testing fetchRequestData:", fetchRequestData);
-  
+  console.log("Sending to:", targetUrl);
+
   try {
     // Create post request
-    const response = await fetch('http://127.0.0.1:8080/set-post', fetchRequestData);
+    const response = await fetch(targetUrl, fetchRequestData);
 
     // Wait for data 
     const responseData = await response.json();
     console.log("Response after fetch(): ", responseData);
-    // location.reload();
+    location.reload();
   } catch (error) {
     console.log(error);
   }
