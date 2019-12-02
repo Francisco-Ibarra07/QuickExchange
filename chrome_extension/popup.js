@@ -1,5 +1,6 @@
 console.log("Popup.js running");
 
+// TODO(FI): Replace test email with actual email
 const TEST_EMAIL = "hmd@m.com";
 const TEST_PASS = "asdf";
 
@@ -18,9 +19,9 @@ async function getToken() {
   try {
     const username = TEST_EMAIL;
     const password = TEST_PASS;
-    const response = await fetch('http://127.0.0.1:8080/auth', { 
+    const response = await fetch('http://127.0.0.1:8080/auth', {
       headers: new Headers({
-        'Authorization': 'Basic '+ btoa(username + ':' + password), 
+        'Authorization': 'Basic ' + btoa(username + ':' + password),
         'Content-Type': 'application/x-www-form-urlencoded'
       })
     });
@@ -37,8 +38,8 @@ async function getToken() {
       // });
 
       // How to retrieve
-      await chrome.storage.sync.get(['token'], function(result) {
-        console.log("Result:",result);
+      await chrome.storage.sync.get(['token'], function (result) {
+        console.log("Result:", result);
       });
     }
 
@@ -101,46 +102,67 @@ const isValidUrl = (string) => {
     new URL(string);
     return true;
   } catch (_) {
-    return false;  
+    return false;
   }
 }
 
 // Will validate data and will call an async function to make the post request
 async function pushButtonClickHandler(event) {
   const urlInput = document.getElementById("urlInput").value;
-  if (urlInput === '') {
-    console.log("No url input: ", urlInput);
+  const fileInput = document.getElementById("fileInput").files;
+
+  if (urlInput === '' && fileInput.length === 0) {
+    console.log("No url or file input found");
+    return;
+  }
+  else if (urlInput !== '' && fileInput.length !== 0) {
+    console.log("Can only have one or the other");
     return;
   }
 
-  // Validate URL
-  if(!isValidUrl(urlInput)) {
-    console.log("Invalid URL");
-    return;
-  }
-  
-  console.log("Sending url input: ", urlInput);
-  try {
-    // Create json data for post request
-    // TODO(FI): Replace test email with actual email
-    const dataToSend = {
-      "url": urlInput,
-      "email": TEST_EMAIL
-    };
+  let fetchRequestData = undefined;
+  if (urlInput !== '') {
 
-    // Create post request
-    const response = await fetch('http://127.0.0.1:8080/set-post', {
-      method: 'POST', 
+    if (!isValidUrl(urlInput)) {
+      console.log("Invalid URL");
+      return;
+    }
+
+    fetchRequestData = {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(dataToSend)
-    });
-    
+      body: JSON.stringify({
+        "url": urlInput,
+        "email": TEST_EMAIL
+      })
+    }
+  }
+  else if (fileInput.length !== 0) {
+    const formData = new FormData();
+    formData.append('email', TEST_EMAIL);
+    formData.append('file', fileInput[0]);
+
+    fetchRequestData = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+      body: formData
+    }
+  }
+
+  console.log("Testing fetchRequestData:", fetchRequestData);
+  
+  try {
+    // Create post request
+    const response = await fetch('http://127.0.0.1:8080/set-post', fetchRequestData);
+
     // Wait for data 
     const responseData = await response.json();
     console.log("Response after fetch(): ", responseData);
-    location.reload();
+    // location.reload();
   } catch (error) {
     console.log(error);
   }
