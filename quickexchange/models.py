@@ -36,8 +36,8 @@ class DataPost(db.Model):
         max_posts = 10
         # TODO(FI): If deleting something like a file, delete it from storage also
         if (len(author.posts) >= max_posts):
-            # print(f'From {author.posts}')
-            # print(f'Deleting: {author.posts[0]}')
+            print(f'From {author.posts}')
+            print(f'Deleting: {author.posts[0]}')
             deleteMe = author.posts.pop(0)
             db.session.delete(deleteMe)
 
@@ -48,9 +48,12 @@ class DataPost(db.Model):
         elif img_filename is not None:
             new_data_post = cls(img_filename=img_filename, author=author)
         
-        db.session.add(new_data_post)
-        db.session.commit()
-        return new_data_post
+        try:
+            db.session.add(new_data_post)
+            db.session.commit()
+            return new_data_post
+        except:
+            print("Error on adding and commiting new data post")
 
     def __repr__(self):
         if self.url:
