@@ -1,89 +1,165 @@
-body {
-  background: #fafafa;
-  color: #333333;
-  margin-top: 5rem;
+html, body {
+	height: 100%;
+	width: 100%;
+}
+.navbar {
+	background-color: #23415C;
+	padding: 1% 0;
+	font-size: 1.2em;
+}
+.navbar-brand {
+	min-height: 55px;
+	padding: 0 15px 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: white;
+}
+.navbar-brand > span {
+	color: white;
+}
+.navbar-default .navbar-nav li a {
+	color: #d5d5d5;
+}
+.navbar-default .navbar-nav li a:hover, .navbar-default .navbar-nav li a:active {
+	color: #FFF;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  color: #444444;
+/* For home.html */
+#main-form {
+	/* border: black dashed 1px; */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	padding: 100px 0px 0px 0px;
 }
-
-.bg-steel {
-  background-color: #5f788a;
+.submit-form {
+	background: #ffffff;
+  padding: 10px 20px;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+	margin-bottom: 20px;
+	width: 80%;
 }
-
-.site-header .navbar-nav .nav-link {
-  color: #cbd5db;
+.history-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
 }
-
-.site-header .navbar-nav .nav-link:hover {
-  color: #ffffff;
-}
-
-.site-header .navbar-nav .nav-link.active {
-  font-weight: 500;
-}
-
-.content-section {
+.history-section {
   background: #ffffff;
   padding: 10px 20px;
   border: 1px solid #dddddd;
   border-radius: 3px;
-  margin-bottom: 20px;
+	margin-bottom: 20px;
+	width: 80%;
+}
+.list-group {
+	word-wrap: break-word;
+}
+.scrollable-list {
+	overflow: auto;
+	max-height: 210px;
 }
 
-.article-title {
-  color: #444444;
+/* For landing-page.html */
+#home {
+	background: url(img/laptop.jpg) no-repeat center center fixed;
+	height: 100%;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	background-size: cover;
+}
+.home-wrapper {
+	/* border: black dashed 1px; */
+	background-color: rgba(0, 0, 0, 0.562);
+	padding: 0 30px;
+	/* width: 50%; */
+}
+.landing-text {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	height: 100%;
+	padding-bottom: 20px;
+	color: white;
+	text-align: center;
+}
+.landing-text h1 {
+	font-size: 60px;
+	font-weight: 700%;
+}
+#fixed {
+	background: url(img/phones.jpg) no-repeat center center fixed;
+	display: table;
+	height: 40%;
+	position: relative;
+	width: 100%;
+	background-size: cover;
 }
 
-a.article-title:hover {
-  color: #428bca;
-  text-decoration: none;
+/* Both landing and home */
+.padding {
+	padding: 80px 0;
+}
+.padding img {
+	width: 100%;
 }
 
-.article-content {
-  white-space: pre-line;
+/* For footer */
+footer {
+	width: 100%;
+	background-color: #23415C;
+	padding: 5% 5% 10% 5%;
+	color: #FFF;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.fa {
+	padding: 15px;
+	font-size: 25px;
+	color: #FFF;
+}
+.fa:hover {
+	color: #d5d5d5;
+	text-decoration: none;
+}
+.icon {
+	max-width: 200px;
+}
+.footer-contact > h4 {
+	font-size: 1em;
 }
 
-.article-img {
-  height: 65px;
-  width: 65px;
-  margin-right: 16px;
+/* Media queries */
+@media (max-width: 768px) {
+	.landing-text h1 {
+		font-size: 48px;
+	}
+	.fa {
+		font-size: 20px;
+		padding: 10px;
+	}
+	.icon {
+		padding-top: 5%;
+		max-width: 100px;
+	}
+}
+@media (min-width: 1024px) {
+	.submit-form, .history-section {
+		width: 600px;
+	}
 }
 
-.article-metadata {
-  padding-bottom: 1px;
-  margin-bottom: 4px;
-  border-bottom: 1px solid #e3e3e3
+@media (max-width: 510px) {
+	footer {
+		display: block;
+	}
 }
-
-.article-metadata a:hover {
-  color: #333;
-  text-decoration: none;
-}
-
-.article-svg {
-  width: 25px;
-  height: 25px;
-  vertical-align: middle;
-}
-
-.account-img {
-  height: 125px;
-  width: 125px;
-  margin-right: 20px;
-  margin-bottom: 16px;
-}
-
-.account-heading {
-  font-size: 2.5rem;
-}
-
-/* Landing page styles */
-
-/* #landing-section1 {
-  background-image: url('../static/test.png');
-  background-attachment: fixed;
-  background-size: cover;
-  background-position: center;
-} */
