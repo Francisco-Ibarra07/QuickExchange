@@ -224,10 +224,7 @@ def create_file_post():
         # TODO(FI): Save image to a better location and check for validation of file (i.e file name, size, extension type)
         # Also delete image from folder once it comes time to DELETE!
         picture_filename = save_picture(file)
-        print("was able to return from save_picture")
-        print(picture_filename)
         DataPost.create_new_data_post(img_filename=picture_filename, author=target_user)
-        print('created post')
         return jsonify({'message': 'new post created'}), 200
     except:
         print('error on creating new post')
