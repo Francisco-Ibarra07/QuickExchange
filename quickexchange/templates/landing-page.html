@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='landing-page.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
 
 </head>
 
@@ -51,14 +51,13 @@
       <div class="landing-text">
         <h1>QUICK EXCHANGE</h1>
         <h3>Start exchanging files today!</h3>
-        <!-- TODO(FI): Make a popout of 3 options: login, register, show more below -->
-        <a href="#" class="btn btn-default btn-lg">Get Started</a>
+        <a href="#about-qe-section" class="btn btn-default btn-lg">Get Started</a>
       </div>
     </div>
   </div>
 
   <!-- What is Quick Exchage section -->
-  <div class="padding">
+  <div class="padding" id="about-qe-section">
     <div class="container">
       <div class="row">
         <!-- 6 Columns for left image -->
