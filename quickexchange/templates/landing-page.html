@@ -1,205 +1,156 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <title>Quick Exchange - Home</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
-
-</head>
-
-<body>
-
-  <!-- Navigation header section -->
-  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <!-- Hamburger Button -->
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-main">
-          <!-- sr-only is for people who can't see the navigation icon -->
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <!-- navbar-brand for logo images -->
-        <!-- <a class="navbar-brand" href="#"><img src="img/w3newbie.png"></a> -->
-        <a class="navbar-brand" href="{{ url_for('home') }}">
-          <span>Quick Exchange</span>
-        </a>
-      </div>
-
-      <!-- Navigation buttons -->
-      <div class="collapse navbar-collapse" id="navbar-collapse-main">
-        <ul class="nav navbar-nav navbar-right">
-          <li><a class="active" href="{{ url_for('home') }}">Home</a></li>
-          <li><a href="{{ url_for('about') }}">About</a></li>
-          <li><a href="{{ url_for('login') }}">Login</a></li>
-          <li><a href="{{ url_for('register') }}">Register</a></li>
-        </ul>
-      </div>
+{% extends "layout.html" %}
+{% block content %}
+<!-- Home image -->
+<div id="home">
+  <div class="home-wrapper">
+    <div class="landing-text">
+      <h1>QUICK EXCHANGE</h1>
+      <h3>Start exchanging files today!</h3>
+      <a href="#about-qe-section" class="btn btn-default btn-lg">Get Started</a>
     </div>
-  </nav>
+  </div>
+</div>
 
-  <!-- Home image -->
-  <div id="home">
-    <div class="home-wrapper">
-      <div class="landing-text">
-        <h1>QUICK EXCHANGE</h1>
-        <h3>Start exchanging files today!</h3>
-        <a href="#about-qe-section" class="btn btn-default btn-lg">Get Started</a>
+<!-- What is Quick Exchage section -->
+<div class="padding" id="about-qe-section">
+  <div class="container">
+    <div class="row">
+      <!-- 6 Columns for left image -->
+      <div class="col-sm-6">
+        <img src="static/img/bootstrap.png">
+      </div>
+
+      <!-- Columns for text area -->
+      <div class="col-sm-6 text-center">
+        <h2>What is Quick Exchange?</h2>
+        <p class="lead">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+          exercitation ullamco laboris nisi
+        </p>
+        <p class="lead">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+          exercitation ullamco laboris nisi
+        </p>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- What is Quick Exchage section -->
-  <div class="padding" id="about-qe-section">
-    <div class="container">
-      <div class="row">
-        <!-- 6 Columns for left image -->
-        <div class="col-sm-6">
-          <img src="static/img/bootstrap.png">
-        </div>
+<!-- How it works section -->
+<div class="padding">
+  <div class="container">
+    <div class="row">
 
-        <!-- Columns for text area -->
-        <div class="col-sm-6 text-center">
-          <h2>What is Quick Exchange?</h2>
-          <p class="lead">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi
-          </p>
-          <p class="lead">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi
-          </p>
-        </div>
+      <!-- Columns for text area -->
+      <div class="col-sm-6 text-center">
+        <h2>How it works</h2>
+        <p class="lead">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+          exercitation ullamco laboris nisi
+        </p>
+        <p class="lead">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+          exercitation ullamco laboris nisi
+        </p>
+      </div>
+
+      <!-- 6 Columns for left image -->
+      <div class="col-sm-6">
+        <img src="static/img/bootstrap.png">
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- "Build with" Section -->
+<div class="padding">
+  <div class="container">
+    <div class="row">
+      <!-- 4 columns for large and medium screens -->
+      <!-- 2 columns for small screens -->
+      <!-- 1 column for extra small screens -->
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <h4>Build with Sass</h4>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+          exercitation ullamco laboris nisi
+        </p>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <img src="static/img/sass.png" class="img-responsive">
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <h4>And Less</h4>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+          exercitation ullamco laboris nisi
+        </p>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <img src="static/img/less.png" class="img-responsive">
       </div>
     </div>
   </div>
+</div>
 
-  <!-- How it works section -->
-  <div class="padding">
-    <div class="container">
-      <div class="row">
+<!-- Fixed image scrolling thingy -->
+<div id="fixed">
+</div>
 
-        <!-- Columns for text area -->
-        <div class="col-sm-6 text-center">
-          <h2>How it works</h2>
-          <p class="lead">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi
-          </p>
-          <p class="lead">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi
-          </p>
-        </div>
+<!-- Here is the cool thing section -->
+<div class="padding">
+  <div class="container">
+    <div class="row">
 
-        <!-- 6 Columns for left image -->
-        <div class="col-sm-6">
-          <img src="static/img/bootstrap.png">
-        </div>
-
+      <!-- Columns for text area -->
+      <div class="col-sm-6">
+        <h4>Here is the cool thing about Quick Exchange</h4>
+        <p>
+          You can exchange PDF's, mp4 files, images, or zip files no matter your platform!
+          consectetur adipiscing elit, sed do eiusmod tempor
+          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+          exercitation ullamco laboris nisi
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+          exercitation ullamco laboris nisi
+        </p>
       </div>
-    </div>
-  </div>
 
-  <!-- "Build with" Section -->
-  <div class="padding">
-    <div class="container">
-      <div class="row">
-        <!-- 4 columns for large and medium screens -->
-        <!-- 2 columns for small screens -->
-        <!-- 1 column for extra small screens -->
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-          <h4>Build with Sass</h4>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi
-          </p>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-          <img src="static/img/sass.png" class="img-responsive">
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-          <h4>And Less</h4>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi
-          </p>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-          <img src="static/img/less.png" class="img-responsive">
-        </div>
+      <!-- 6 Columns for left image -->
+      <div class="col-sm-6">
+        <img src="static/img/bootstrap2.png">
       </div>
+
     </div>
   </div>
+</div>
 
-  <!-- Fixed image scrolling thingy -->
-  <div id="fixed">
+<!-- Footer section -->
+<footer class="container-fluid text-center">
+  <div class="col-sm-4">
+    <h3>Contact Us</h3>
+    <br>
+    <h4>Quick.Exchange.Contact@gmail.com</h4>
   </div>
-
-  <!-- Here is the cool thing section -->
-  <div class="padding">
-    <div class="container">
-      <div class="row">
-
-        <!-- Columns for text area -->
-        <div class="col-sm-6">
-          <h4>Here is the cool thing about Quick Exchange</h4>
-          <p>
-            You can exchange PDF's, mp4 files, images, or zip files no matter your platform!
-            consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi
-          </p>
-        </div>
-
-        <!-- 6 Columns for left image -->
-        <div class="col-sm-6">
-          <img src="static/img/bootstrap2.png">
-        </div>
-
-      </div>
-    </div>
+  <div class="col-sm-4">
+    <h3>Connect</h3>
+    <a href="#" class="fa fa-facebook"></a>
+    <a href="#" class="fa fa-twitter"></a>
+    <a href="#" class="fa fa-google"></a>
+    <a href="#" class="fa fa-linkedin"></a>
+    <a href="#" class="fa fa-youtube"></a>
   </div>
-
-  <!-- Footer section -->
-  <footer class="container-fluid text-center">
-    <div class="col-sm-4">
-      <h3>Contact Us</h3>
-      <br>
-      <h4>Quick.Exchange.Contact@gmail.com</h4>
-    </div>
-    <div class="col-sm-4">
-      <h3>Connect</h3> 
-      <a href="#" class="fa fa-facebook"></a>
-      <a href="#" class="fa fa-twitter"></a>
-      <a href="#" class="fa fa-google"></a>
-      <a href="#" class="fa fa-linkedin"></a>
-      <a href="#" class="fa fa-youtube"></a>
-    </div>
-    <div class="col-sm-4">
-      <img src="static/img/b.png" class="icon">
-    </div>
-  </footer>
-
-  </footer>
-</body>
-
-</html>
+  <div class="col-sm-4">
+    <img src="static/img/b.png" class="icon">
+  </div>
+</footer>
+{% endblock content %}
