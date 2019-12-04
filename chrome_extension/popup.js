@@ -3,7 +3,7 @@ console.log("Popup.js running");
 // TODO(FI): Replace test email with actual email
 const TEST_EMAIL = "hmd@m.com";
 const TEST_PASS = "asdf";
-
+const DEV_URL = "http://127.0.0.1:5000";
 document.addEventListener('DOMContentLoaded', function () {
   document.getElementById("copyButton").addEventListener("click", copyButtonClickHandler);
   document.getElementById("popButton").addEventListener("click", popButtonClickHandler);
@@ -19,7 +19,8 @@ async function getToken() {
   try {
     const username = TEST_EMAIL;
     const password = TEST_PASS;
-    const response = await fetch('http://127.0.0.1:8080/auth', {
+    const url = DEV_URL + "/auth";
+    const response = await fetch(url, {
       headers: new Headers({
         'Authorization': 'Basic ' + btoa(username + ':' + password),
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -53,7 +54,8 @@ async function getToken() {
 // Fetch latest post url from Flask route
 async function populateTextAreaElement() {
   try {
-    const response = await fetch('http://127.0.0.1:8080/get-latest-post?email=' + TEST_EMAIL);
+    const url = DEV_URL + "/get-latest-post?email=" + TEST_EMAIL;
+    const response = await fetch(url);
     const data = await response.json();
 
     let textareaElement = document.getElementById("currentStoredMediaBox");
@@ -129,7 +131,7 @@ async function pushButtonClickHandler(event) {
       return;
     }
 
-    targetUrl = 'http://127.0.0.1:8080/create-url-post'
+    targetUrl = DEV_URL + '/create-url-post';
     fetchRequestData = {
       method: 'POST',
       headers: {
@@ -146,7 +148,7 @@ async function pushButtonClickHandler(event) {
     formData.append('email', TEST_EMAIL);
     formData.append('file', fileInput[0]);
 
-    targetUrl = 'http://127.0.0.1:8080/create-file-post'
+    targetUrl = DEV_URL + '/create-file-post';
     fetchRequestData = {
       method: 'POST',
       body: formData

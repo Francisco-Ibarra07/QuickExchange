@@ -180,7 +180,7 @@ def get_latest_post():
         }), 200
     elif latest_post.img_filename:
         img_url = url_for('static', filename='profile_pics/' + latest_post.img_filename)
-        url_for_TESTING = f'http://127.0.0.1:8080{img_url}'
+        url_for_TESTING = f'http://127.0.0.1:5000{img_url}'
         return jsonify({
             'message': 'post found',
             'type': 'url',
