@@ -2,13 +2,16 @@ html, body {
 	height: 100%;
 	width: 100%;
 }
+
+/* Navigation section */
 .navbar {
 	background-color: #23415C;
-	padding: 1% 0;
 	font-size: 1.2em;
+	position: relative;
+	margin-bottom: 0px;
 }
 .navbar-brand {
-	min-height: 55px;
+	/* min-height: 55px; */
 	padding: 0 15px 5px;
 	display: flex;
 	justify-content: center;
@@ -25,6 +28,17 @@ html, body {
 	color: #FFF;
 }
 
+/* Alert messages */
+.alert-messages {
+	/* border: black dashed 1px; */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	top: 5px;
+	/* max-width: 80%; */
+}
+
 /* For home.html */
 #main-form {
 	/* border: black dashed 1px; */
@@ -32,7 +46,7 @@ html, body {
 	justify-content: center;
 	align-items: center;
 	position: relative;
-	padding: 100px 0px 0px 0px;
+	margin-top: 5px;
 }
 .submit-form {
 	background: #ffffff;
@@ -46,6 +60,7 @@ html, body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	position: relative;
 	width: 100%;
 }
 .history-section {
@@ -116,11 +131,12 @@ html, body {
 footer {
 	width: 100%;
 	background-color: #23415C;
-	padding: 5% 5% 10% 5%;
+	padding: 1% 0%;
 	color: #FFF;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	position: relative;
 }
 .fa {
 	padding: 15px;
