@@ -18,6 +18,7 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
+
 class DataPost(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     url = db.Column(db.String(100), default=None)
@@ -61,19 +62,8 @@ class DataPost(db.Model):
         else:
             return f"{self.img_filename}"
 
-# Post as in Blog Post (not POST http)
-class Post(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
-    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    content = db.Column(db.Text, nullable=False)
-
-    def __repr__(self):
-        return f"Post('{self.title}', '{self.date_posted}')"
-
-
 # Quick way to import models and test:
-# >>> from quickexchange.models import User, Post, DataPost
+# >>> from quickexchange.models import User, DataPost
 # >>> from quickexchange import db
 # >>> db.create_all()
 # >>> User.query.all()

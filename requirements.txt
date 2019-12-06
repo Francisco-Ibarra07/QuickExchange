@@ -4,6 +4,7 @@ Click==7.0
 Flask==1.1.1
 Flask-Bcrypt==0.7.1
 Flask-Cors==3.0.8
+Flask-JWT==0.3.2
 Flask-Login==0.4.1
 Flask-SQLAlchemy==2.4.1
 Flask-WTF==0.14.2
@@ -13,7 +14,7 @@ libmagic==1.0
 MarkupSafe==1.1.1
 Pillow==6.2.1
 pycparser==2.19
-PyJWT==1.7.1
+PyJWT==1.4.2
 python-magic==0.4.15
 python-magic-bin==0.4.14
 six==1.12.0

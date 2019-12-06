@@ -2,11 +2,10 @@ import os
 import jwt
 import secrets
 import datetime
-from PIL import Image
-from flask import render_template, url_for, flash, redirect, request, jsonify
 from quickexchange import app, bcrypt, db
-from quickexchange.forms import RegistrationForm, LoginForm, UpdateAccountForm, DataPostForm, PostForm
-from quickexchange.models import User, Post, DataPost
+from quickexchange.models import User, DataPost
+from quickexchange.forms import RegistrationForm, LoginForm, UpdateAccountForm, DataPostForm
+from flask import render_template, url_for, flash, redirect, request, jsonify
 from flask_login import login_user, current_user, logout_user, login_required
 
 @app.route('/')
