@@ -23,14 +23,14 @@ def home():
 
     # Return top url if pop button was pressed
     if form.pop_button.data:
-        last_post = next(reversed(current_user.posts), None)
-        if last_post is None:
+        latest_post = next(reversed(current_user.posts), None)
+        if latest_post is None:
             flash(f'No Data set yet. Set a new post then hit "Push" to store it', 'danger')
             return redirect(url_for('home'))
-        elif last_post.url:
-            return redirect(last_post.url)
-        elif last_post.approved_filename:
-            file_url = url_for('static', filename='uploads/' + last_post.hashed_filename)
+        elif latest_post.url:
+            return redirect(latest_post.url)
+        elif latest_post.approved_filename:
+            file_url = url_for('static', filename='uploads/' + latest_post.hashed_filename)
             return redirect(file_url)
     
     # If push button was pressed
@@ -48,17 +48,19 @@ def home():
             filepath_for_storage = ''
             if allowed_file(file.filename):
                 approved_filename = secure_filename(file.filename)
-                random_hex = secrets.token_hex(8) 
+                random_hex = secrets.token_hex(8)
                 f_name, f_ext = os.path.splitext(approved_filename)
                 hashed_filename = random_hex + f_ext
                 filepath_for_storage = os.path.join(app.config['FILE_UPLOAD_PATH'], hashed_filename)
+                file.save(filepath_for_storage)
                 DataPost.create_new_file_post(author=current_user, approved_filename=approved_filename, hashed_filename=hashed_filename, storage_path=filepath_for_storage)
                 flash(f'New file set!', 'success')
             else:
-                flash(f'That file extension is not allowed!\nThese are the allowed file extensions: {app.config["ALLOWED_FILE_EXTENSIONS"]}', 'danger')
+                flash(f'That file extension is not allowed!', 'danger')
+                flash(f'These are the allowed file extensions: {app.config["ALLOWED_FILE_EXTENSIONS"]}', 'info')
 
         else:
-            flash(f'Nothing was submitted!', 'info')
+            flash(f'There is nothing to push!', 'info')
         return redirect(url_for('home'))
 
     history = reversed(current_user.posts) if len(current_user.posts) > 0 else None
@@ -182,7 +184,7 @@ def get_latest_post():
             'url': latest_post.url
         }), 200
     elif latest_post.approved_filename:
-        file_path = latest_post.storage_path
+        file_path = url_for('static', filename='uploads/' + latest_post.hashed_filename)
         url_for_TESTING = f'http://127.0.0.1:5000{file_path}'
         return jsonify({
             'message': 'post found',
@@ -201,8 +203,6 @@ def create_file_post():
     # Get input files
     request_file_data = request.files
     request_form_data = request.form
-    print(request_file_data)
-    print(request_form_data)
 
     # Make sure request contains file and form data
     if request_file_data is None or request_form_data is None:
@@ -243,7 +243,6 @@ def create_file_post():
         # TODO(FI): Save image to a better location and check for validation of file (i.e file name, size, extension type)
         # Also delete image from folder once it comes time to DELETE!
         file.save(filepath_for_storage)
-        
         DataPost.create_new_file_post(author=target_user, approved_filename=approved_filename, \
                 hashed_filename=hashed_filename, storage_path=filepath_for_storage)
 
