@@ -1,4 +1,4 @@
-from quickexchange import db, login_manager
+from quickexchange import app, db, login_manager
 from datetime import datetime
 from flask_login import UserMixin
 
@@ -22,45 +22,63 @@ class User(db.Model, UserMixin):
 class DataPost(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     url = db.Column(db.String(100), default=None)
-    img_filename = db.Column(db.String(), default=None)
-    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    storage_path = db.Column(db.String(), default=None)
+    hashed_filename = db.Column(db.String(), default=None)
+    approved_filename = db.Column(db.String(100), default=None)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     @classmethod
-    def create_new_data_post(cls, author, url=None, img_filename=None):
-        if (url is None) and (img_filename is None):
-            print("Both args are None")
+    def delete(cls, data_post):
+        try:
+            db.session.delete(data_post)
+        except:
+            print('error on deleting post')
+
+    @classmethod
+    def create_new_url_post(cls, author, url):
+        if (not author or not url):
+            print(f'Invalid inputs: {author}, {url}')
             return
         
-        # Check size of current posts
-        # If greater than max posts, delete the oldest
-        max_posts = 10
-        # TODO(FI): If deleting something like a file, delete it from storage also
-        if (len(author.posts) >= max_posts):
-            print(f'From {author.posts}')
-            print(f'Deleting: {author.posts[0]}')
+        if(len(author.posts) >= app.config['MAX_DATAPOSTS_ALLOWED']):
             deleteMe = author.posts.pop(0)
-            db.session.delete(deleteMe)
-
-        # Add new url or file post
-        new_data_post = None
-        if url is not None:
-            new_data_post = cls(url=url, author=author)
-        elif img_filename is not None:
-            new_data_post = cls(img_filename=img_filename, author=author)
+            cls.delete(deleteMe)
         
         try:
-            db.session.add(new_data_post)
+            new_url_post = cls(url=url, author=author)
+            db.session.add(new_url_post)
             db.session.commit()
-            return new_data_post
+            return new_url_post
         except:
+            # TODO(FI): https://is.gd/KVemWL <-- look into errors if db throws an exception
+            print("Error on adding and commiting new data post")
+
+
+    @classmethod
+    def create_new_file_post(cls, author, approved_filename, hashed_filename, storage_path):
+        if (not author) or (not approved_filename) or (not hashed_filename) or (not storage_path):
+            print(f'Invalid inputs: {author}, {approved_filename}, {hashed_filename}, {storage_path}')
+            return
+        
+        if(len(author.posts) >= app.config['MAX_DATAPOSTS_ALLOWED']):
+            deleteMe = author.posts.pop(0)
+            cls.delete(deleteMe)
+
+        try:
+            new_file_post = cls(author=author, approved_filename=approved_filename, hashed_filename=hashed_filename, storage_path=storage_path)
+            db.session.add(new_file_post)
+            db.session.commit()
+            return new_file_post
+        except:
+            # TODO(FI): https://is.gd/KVemWL <-- look into errors if db throws an exception
             print("Error on adding and commiting new data post")
 
     def __repr__(self):
         if self.url:
             return f"{self.url}"
         else:
-            return f"{self.img_filename}"
+            return f"{self.approved_filename}"
 
 # Quick way to import models and test:
 # >>> from quickexchange.models import User, DataPost
