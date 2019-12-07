@@ -11,11 +11,15 @@ body{
 .extension--push-form {
 	/* border: black dashed 2px; */
 }
-.extension--push-button {
-  /* display: flex;
+.extension--push-button-section {
+  display: flex;
   justify-content: center;
-  align-items: center; */
-  /* padding: 0 0px; */
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.extension--push-button {
+  width: 120px;
   text-align: center;
 }
 .extension--pop-form {
