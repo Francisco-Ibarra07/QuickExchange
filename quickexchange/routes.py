@@ -240,8 +240,6 @@ def create_file_post():
     
     # Save the new file (with approved_filename) and author it with the requested user
     try:
-        # TODO(FI): Save image to a better location and check for validation of file (i.e file name, size, extension type)
-        # Also delete image from folder once it comes time to DELETE!
         file.save(filepath_for_storage)
         DataPost.create_new_file_post(author=target_user, approved_filename=approved_filename, \
                 hashed_filename=hashed_filename, storage_path=filepath_for_storage)
