@@ -112,9 +112,13 @@
     {% if history %}
     <p class='text-muted'>Up to {{max_dataposts_allowed}} of your most recent posts will be displayed here.
       <ul class="list-group scrollable-list">
-        {% for url in history %}
+        {% for post in history %}
         <li class="list-group-item list-group-item-light">
-          <a class="nav-item nav-link" href="{{url}}">{{ url }}</a>
+          {% if post.url %}
+            <a class="nav-item nav-link" href="{{post.url}}">{{ post.url }}</a>
+          {% elif post.approved_filename %}
+            <a class="nav-item nav-link" href="{{url_for('static', filename='uploads/' + post.hashed_filename)}}">{{ post.approved_filename }}</a>
+          {% endif %}
         </li>
         {% endfor %}
       </ul>
