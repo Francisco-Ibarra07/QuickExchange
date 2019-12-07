@@ -1,3 +1,4 @@
+import os
 from quickexchange import app, db, login_manager
 from datetime import datetime
 from flask_login import UserMixin
@@ -31,7 +32,16 @@ class DataPost(db.Model):
     @classmethod
     def delete(cls, data_post):
         try:
+            # If the post that we are deleting happens to be a file, delete it from storage as well
+            if data_post.approved_filename:
+                if os.path.exists(data_post.storage_path):
+                    print(f'Removing file: {data_post.hashed_filename}')
+                    os.remove(data_post.storage_path)
+                else:
+                    print("The file does not exist")
+
             db.session.delete(data_post)
+            db.session.commit()
         except:
             print('error on deleting post')
 
@@ -41,8 +51,10 @@ class DataPost(db.Model):
             print(f'Invalid inputs: {author}, {url}')
             return
         
+        # If we have reached our post limit, delete the oldest post
         if(len(author.posts) >= app.config['MAX_DATAPOSTS_ALLOWED']):
             deleteMe = author.posts.pop(0)
+            print(f'Max post limit reached. Deleting: {deleteMe}')
             cls.delete(deleteMe)
         
         try:
