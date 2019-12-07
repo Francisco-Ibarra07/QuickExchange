@@ -114,6 +114,7 @@
       <ul class="list-group scrollable-list">
         {% for post in history %}
         <li class="list-group-item list-group-item-light">
+          {{ loop.index }}:
           {% if post.url %}
             <a class="nav-item nav-link" href="{{post.url}}">{{ post.url }}</a>
           {% elif post.approved_filename %}
