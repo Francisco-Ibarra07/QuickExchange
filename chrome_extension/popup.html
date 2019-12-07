@@ -31,8 +31,8 @@
       <div class="form-group">
         <label>File Upload</label>
         <div class="custom-file">
-          <input type="file" name="file" id="fileInput" class="custom-file-input">
-          <label class="custom-file-label">Choose file</label>
+          <input type="file" name="file" id="fileInput" class="">
+          <!-- <label class="">Choose file</label> -->
         </div>
       </div>
 
@@ -62,6 +62,18 @@
 
     <div class="extension--show-history">
       <a href="#">Show my recent history</a>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="bg-modal">
+    <div class="modal-content">
+      <h1 class="modal-title">You need to log in first!</h1>
+      <div class="form-group">
+        <input type="text" name="email" id="emailInput" placeholder="Email" class="login-input">
+        <input type="text" name="password" id="passwordInput" placeholder="Password" class="login-input">
+        <button id="loginButton" class="btn btn-primary">Login</button>
+      </div>
     </div>
   </div>
 
