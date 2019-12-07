@@ -8,7 +8,6 @@ from flask_login import current_user
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
-    
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
@@ -29,7 +28,7 @@ class RegistrationForm(FlaskForm):
 
 class DataPostForm(FlaskForm):
     url = StringField('URL Link', validators=[URL()])
-    img = FileField('File Uploads', validators=[FileAllowed(['jpg', 'png', 'gif'])])
+    file = FileField('File Uploads', validators=[FileAllowed(['jpg', 'png', 'gif', 'jpeg'])])
     push_button = SubmitField('Push')
     pop_button = SubmitField('Pop')
 
@@ -43,7 +42,7 @@ class LoginForm(FlaskForm):
 class UpdateAccountForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png', 'gif'])])
+    picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png', 'gif', 'jpeg'])])
     submit = SubmitField('Update')
 
     def validate_username(self, username):
