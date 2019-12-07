@@ -146,6 +146,14 @@ def account():
             new_img_filename = random_hex + f_ext
             img_storage_path = os.path.join(app.root_path, 'static/profile_pics', new_img_filename)
             img_file.save(img_storage_path)
+
+            # Delete the old profile picture if its not the default one
+            if current_user.image_file != 'default.jpg':
+                old_img_file = current_user.image_file
+                old_img_file_path = os.path.join(app.root_path,'static/profile_pics', old_img_file)
+                if os.path.exists(old_img_file_path):
+                    os.remove(old_img_file_path)
+
             current_user.image_file = new_img_filename
 
         current_user.username = form.username.data
