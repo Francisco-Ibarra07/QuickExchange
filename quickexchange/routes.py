@@ -101,8 +101,9 @@ def register():
         db.session.add(user)
         db.session.commit()
 
-        flash(f'Your account has been created! You are now able to log in', 'success') # Displays a message at the top 
-        return redirect(url_for('login')) # Then we redirect the user to home page
+        login_user(user)
+        flash(f'Your account has been created!', 'success') # Displays a message at the top 
+        return redirect(url_for('home')) # Then we redirect the user to home page
 
     return render_template('register.html', title='Register', form=form)
 
@@ -139,10 +140,13 @@ def account():
 
     if form.validate_on_submit():
         if form.picture.data:
-            # TODO(FI): Redefine save_pic() to work for profile picture uploads
-            return
-            picture_file = ''#save_picture(form.picture.data)
-            current_user.image_file = picture_file
+            img_file = form.picture.data
+            random_hex = secrets.token_hex(16)
+            f_name, f_ext = os.path.splitext(secure_filename(img_file.filename))
+            new_img_filename = random_hex + f_ext
+            img_storage_path = os.path.join(app.root_path, 'static/profile_pics', new_img_filename)
+            img_file.save(img_storage_path)
+            current_user.image_file = new_img_filename
 
         current_user.username = form.username.data
         current_user.email = form.email.data
