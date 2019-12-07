@@ -2,6 +2,7 @@ import os
 import jwt
 import secrets
 import datetime
+from werkzeug.utils import secure_filename
 from quickexchange import app, bcrypt, db
 from quickexchange.models import User, DataPost
 from quickexchange.forms import RegistrationForm, LoginForm, UpdateAccountForm, DataPostForm
@@ -18,7 +19,7 @@ def home():
 
     # If user isn't authenticated, send to landing page
     if not current_user.is_authenticated:
-        return render_template('landing-page.html')
+        return render_template('landing-page.html', title='Welcome')
 
     # Return top url if pop button was pressed
     if form.pop_button.data:
@@ -28,27 +29,40 @@ def home():
             return redirect(url_for('home'))
         elif last_post.url:
             return redirect(last_post.url)
-        elif last_post.img_filename:
-            image_file = url_for('static', filename='profile_pics/' + last_post.img_filename)
-            return redirect(image_file)
+        elif last_post.approved_filename:
+            file_url = url_for('static', filename='uploads/' + last_post.hashed_filename)
+            return redirect(file_url)
     
     # If push button was pressed
     elif form.push_button.data:
-        if form.img.data and form.url.data:
+        if form.file.data and form.url.data:
             flash(f'Looks like you are trying to submit two things. Choose one only!', 'danger')
         elif form.url.data:
-            DataPost.create_new_data_post(url=form.url.data, author=current_user)
+            DataPost.create_new_url_post(url=form.url.data, author=current_user)
             flash(f'New URL set to: {form.url.data}', 'success')
-        elif form.img.data:
-            picture_filename = save_picture(form.img.data)
-            DataPost.create_new_data_post(img_filename=picture_filename, author=current_user)
-            flash(f'New image set!', 'success')
+        elif form.file.data:
+            # Validate file input
+            file = form.file.data
+            approved_filename = ''
+            hashed_filename = ''
+            filepath_for_storage = ''
+            if allowed_file(file.filename):
+                approved_filename = secure_filename(file.filename)
+                random_hex = secrets.token_hex(8) 
+                f_name, f_ext = os.path.splitext(approved_filename)
+                hashed_filename = random_hex + f_ext
+                filepath_for_storage = os.path.join(app.config['FILE_UPLOAD_PATH'], hashed_filename)
+                DataPost.create_new_file_post(author=current_user, approved_filename=approved_filename, hashed_filename=hashed_filename, storage_path=filepath_for_storage)
+                flash(f'New file set!', 'success')
+            else:
+                flash(f'That file extension is not allowed!\nThese are the allowed file extensions: {app.config["ALLOWED_FILE_EXTENSIONS"]}', 'danger')
+
         else:
             flash(f'Nothing was submitted!', 'info')
         return redirect(url_for('home'))
 
     history = reversed(current_user.posts) if len(current_user.posts) > 0 else None
-    return render_template('home.html', form=form, history=history)
+    return render_template('home.html', title='Home', form=form, history=history, max_dataposts_allowed=app.config['MAX_DATAPOSTS_ALLOWED'])
 
 @app.route("/auth")
 def authenticate():
@@ -116,18 +130,6 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
-# Randomizes picture file name to avoid collisions. 
-# Saves image and returns new img name
-def save_picture(form_picture):
-    random_hex = secrets.token_hex(8) 
-    f_name, f_ext = os.path.splitext(form_picture.filename)
-    picture_filename = random_hex + f_ext
-    picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_filename)
-
-    form_picture.save(picture_path)
-
-    return picture_filename
-
 @app.route("/account", methods=['GET', 'POST'])
 @login_required
 def account():
@@ -135,7 +137,9 @@ def account():
 
     if form.validate_on_submit():
         if form.picture.data:
-            picture_file = save_picture(form.picture.data)
+            # TODO(FI): Redefine save_pic() to work for profile picture uploads
+            return
+            picture_file = ''#save_picture(form.picture.data)
             current_user.image_file = picture_file
 
         current_user.username = form.username.data
@@ -177,9 +181,9 @@ def get_latest_post():
             'type': 'url',
             'url': latest_post.url
         }), 200
-    elif latest_post.img_filename:
-        img_url = url_for('static', filename='profile_pics/' + latest_post.img_filename)
-        url_for_TESTING = f'http://127.0.0.1:5000{img_url}'
+    elif latest_post.approved_filename:
+        file_path = latest_post.storage_path
+        url_for_TESTING = f'http://127.0.0.1:5000{file_path}'
         return jsonify({
             'message': 'post found',
             'type': 'url',
@@ -200,6 +204,7 @@ def create_file_post():
     print(request_file_data)
     print(request_form_data)
 
+    # Make sure request contains file and form data
     if request_file_data is None or request_form_data is None:
         print('no file data or form data supplied')
         return jsonify({'message': 'no files or form data supplied'}), 400
@@ -212,22 +217,44 @@ def create_file_post():
         print('no file or email supplied')
         return jsonify({'message': 'no file or email was supplied'}), 400
     
+    # Validate file input
+    approved_filename = ''
+    hashed_filename = ''
+    filepath_for_storage = ''
+    if allowed_file(file.filename):
+        approved_filename = secure_filename(file.filename)
+        random_hex = secrets.token_hex(8) 
+        f_name, f_ext = os.path.splitext(approved_filename)
+        hashed_filename = random_hex + f_ext
+        filepath_for_storage = os.path.join(app.config['FILE_UPLOAD_PATH'], hashed_filename)
+
+    else:
+        print('file extension given is not supported')
+        return jsonify({'message': 'file extension given is not supported'}), 400
+
     # Make sure user exists
     target_user = User.query.filter_by(email=user_email).first()
     if target_user is None:
         print('user does not exist')
         return jsonify({'message': 'user does not exist'}), 400
     
-    # Save the new datapost and author it with the requested user
+    # Save the new file (with approved_filename) and author it with the requested user
     try:
         # TODO(FI): Save image to a better location and check for validation of file (i.e file name, size, extension type)
         # Also delete image from folder once it comes time to DELETE!
-        picture_filename = save_picture(file)
-        DataPost.create_new_data_post(img_filename=picture_filename, author=target_user)
+        file.save(filepath_for_storage)
+        
+        DataPost.create_new_file_post(author=target_user, approved_filename=approved_filename, \
+                hashed_filename=hashed_filename, storage_path=filepath_for_storage)
+
         return jsonify({'message': 'new post created'}), 200
     except:
         print('error on creating new post')
         return jsonify({'message': 'error on creating new post'}), 500  
+
+def allowed_file(filename):
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_FILE_EXTENSIONS']
 
 # Inputs -> url key
 # In Between-> Validate input, and store url if correct
@@ -260,7 +287,7 @@ def create_url_post():
     # Save the new datapost and author it with the requested user
     try:
         print(f'url supplied: {request_data["url"]}')
-        DataPost.create_new_data_post(url=request_data['url'], author=target_user)
+        DataPost.create_new_url_post(url=request_data['url'], author=target_user)
         return jsonify({
             'message': 'new post created',
             'url': request_data['url']
