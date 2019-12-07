@@ -48,7 +48,7 @@ def home():
             filepath_for_storage = ''
             if allowed_file(file.filename):
                 approved_filename = secure_filename(file.filename)
-                random_hex = secrets.token_hex(8)
+                random_hex = secrets.token_hex(16)
                 f_name, f_ext = os.path.splitext(approved_filename)
                 hashed_filename = random_hex + f_ext
                 filepath_for_storage = os.path.join(app.config['FILE_UPLOAD_PATH'], hashed_filename)
@@ -223,7 +223,7 @@ def create_file_post():
     filepath_for_storage = ''
     if allowed_file(file.filename):
         approved_filename = secure_filename(file.filename)
-        random_hex = secrets.token_hex(8) 
+        random_hex = secrets.token_hex(16) 
         f_name, f_ext = os.path.splitext(approved_filename)
         hashed_filename = random_hex + f_ext
         filepath_for_storage = os.path.join(app.config['FILE_UPLOAD_PATH'], hashed_filename)
