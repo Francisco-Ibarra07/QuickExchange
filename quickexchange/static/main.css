@@ -136,6 +136,12 @@ html, body {
 	width: 100%;
 }
 
+/* For Account page */
+.account-img {
+	width: 100px;
+	height: 100px;
+}
+
 /* For footer */
 footer {
 	width: 100%;
