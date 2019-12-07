@@ -29,10 +29,10 @@
 
         <!-- Form group for any MEDIA FILES -->
         <div class="form-group" id="media-files">
-          {{ form.img.label() }}
-          {{ form.img(class="form-control-file") }}
-          {% if form.img.errors %}
-          {% for error in form.img.errors %}
+          {{ form.file.label() }}
+          {{ form.file(class="form-control-file") }}
+          {% if form.file.errors %}
+          {% for error in form.file.errors %}
           <span class="text-danger">{{ error }}</span></br>
           {% endfor %}
           {% endif %}
@@ -110,7 +110,7 @@
   <div class="history-section">
     <h3>History</h3>
     {% if history %}
-    <p class='text-muted'>Up to 10 of your most recent posts will be displayed here.
+    <p class='text-muted'>Up to {{max_dataposts_allowed}} of your most recent posts will be displayed here.
       <ul class="list-group scrollable-list">
         {% for url in history %}
         <li class="list-group-item list-group-item-light">
