@@ -89,7 +89,7 @@ def home():
             flash(f"There is nothing to push!", "info")
         return redirect(url_for("home"))
 
-    history = reversed(current_user.posts) if len(current_user.posts) > 0 else None
+    history = list(reversed(current_user.posts)) if len(current_user.posts) > 0 else None
     return render_template(
         "home.html",
         title="Home",
