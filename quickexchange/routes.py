@@ -11,6 +11,7 @@ from quickexchange.forms import (
     UpdateAccountForm,
     DataPostForm,
 )
+from flask import Markup
 from flask import render_template, url_for, flash, redirect, request, jsonify
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -75,13 +76,14 @@ def home():
                     hashed_filename=hashed_filename,
                     storage_path=filepath_for_storage,
                 )
-                flash(f"New file set!", "success")
+                flash(f"New file set to: {approved_filename}", "success")
             else:
                 flash(f"That file extension is not allowed!", "danger")
-                flash(
-                    f'These are the allowed file extensions: {app.config["ALLOWED_FILE_EXTENSIONS"]}',
-                    "info",
+                msg = Markup(
+                    "You can find the list of allowed file extensions here: "
+                    + "<a target='_blank' href='http://localhost:5000/about'>Allowed File Extensions</a>"
                 )
+                flash(msg, "warning")
 
         else:
             flash(f"There is nothing to push!", "info")
@@ -327,6 +329,8 @@ def create_file_post():
 
 
 def allowed_file(filename):
+    ext = filename.rsplit(".", 1)[1].lower()
+    print(f"filetype saw: {ext}")
     return (
         "." in filename
         and filename.rsplit(".", 1)[1].lower() in app.config["ALLOWED_FILE_EXTENSIONS"]
