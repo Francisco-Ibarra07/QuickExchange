@@ -1,6 +1,7 @@
-html, body {
-	height: 100%;
-	width: 100%;
+html,
+body {
+  height: 100%;
+  width: 100%;
 }
 
 /* temp styling for login & register forms*/
@@ -14,183 +15,207 @@ html, body {
 
 /* Navigation section */
 .navbar {
-	background-color: #23415C;
-	font-size: 1.2em;
-	position: relative;
-	margin-bottom: 0px;
+  background-color: #23415C;
+  font-size: 1.2em;
+  position: relative;
+  margin-bottom: 0px;
 }
+
 .navbar-brand {
-	/* min-height: 55px; */
-	padding: 0 15px 5px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	color: white;
+  /* min-height: 55px; */
+  padding: 0 15px 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
 }
-.navbar-brand > span {
-	color: white;
+
+.navbar-brand>span {
+  color: white;
 }
+
 .navbar-default .navbar-nav li a {
-	color: #d5d5d5;
+  color: #d5d5d5;
 }
-.navbar-default .navbar-nav li a:hover, .navbar-default .navbar-nav li a:active {
-	color: #FFF;
+
+.navbar-default .navbar-nav li a:hover,
+.navbar-default .navbar-nav li a:active {
+  color: #FFF;
 }
 
 /* Alert messages */
 .alert-messages {
-	/* border: black dashed 1px; */
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: relative;
-	top: 5px;
-	/* max-width: 80%; */
+  /* border: black dashed 1px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 5px;
+  /* max-width: 80%; */
 }
 
 /* For home.html */
 #main-form {
-	/* border: black dashed 1px; */
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: relative;
-	margin-top: 5px;
+  /* border: black dashed 1px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-top: 5px;
 }
+
 .submit-form {
-	background: #ffffff;
+  background: #ffffff;
   padding: 10px 20px;
   border: 1px solid #dddddd;
   border-radius: 3px;
-	margin-bottom: 20px;
-	width: 80%;
+  margin-bottom: 20px;
+  width: 80%;
 }
+
 .history-wrapper {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: relative;
-	width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
 }
+
 .history-section {
   background: #ffffff;
   padding: 10px 20px;
   border: 1px solid #dddddd;
   border-radius: 3px;
-	margin-bottom: 20px;
-	width: 80%;
+  margin-bottom: 20px;
+  width: 80%;
 }
+
 .list-group {
-	word-wrap: break-word;
+  word-wrap: break-word;
 }
+
 .scrollable-list {
-	overflow: auto;
-	max-height: 210px;
+  overflow: auto;
+  max-height: 210px;
 }
 
 /* For landing-page.html */
 #home {
-	background: url(img/laptop.jpg) no-repeat center center fixed;
-	height: 100%;
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: relative;
-	background-size: cover;
+  background: url(img/laptop.jpg) no-repeat center center fixed;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-size: cover;
 }
+
 .home-wrapper {
-	/* border: black dashed 1px; */
-	background-color: rgba(0, 0, 0, 0.562);
-	padding: 0 30px;
-	/* width: 50%; */
+  /* border: black dashed 1px; */
+  background-color: rgba(0, 0, 0, 0.562);
+  padding: 0 30px;
+  /* width: 50%; */
 }
+
 .landing-text {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	height: 100%;
-	padding-bottom: 20px;
-	color: white;
-	text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  padding-bottom: 20px;
+  color: white;
+  text-align: center;
 }
+
 .landing-text h1 {
-	font-size: 60px;
-	font-weight: 700%;
+  font-size: 60px;
+  font-weight: 700%;
 }
+
 #fixed {
-	background: url(img/phones.jpg) no-repeat center center fixed;
-	display: table;
-	height: 40%;
-	position: relative;
-	width: 100%;
-	background-size: cover;
+  background: url(img/phones.jpg) no-repeat center center fixed;
+  display: table;
+  height: 40%;
+  position: relative;
+  width: 100%;
+  background-size: cover;
 }
 
 /* Both landing and home */
 .padding {
-	padding: 80px 0;
+  padding: 80px 0;
 }
+
 .padding img {
-	width: 100%;
+  width: 100%;
 }
 
 /* For Account page */
 .account-img {
-	width: 100px;
-	height: 100px;
+  width: 100px;
+  height: 100px;
 }
 
 /* For footer */
 footer {
-	width: 100%;
-	background-color: #23415C;
-	padding: 1% 0%;
-	color: #FFF;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	position: relative;
+  width: 100%;
+  background-color: #23415C;
+  padding: 1% 0%;
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
 }
+
 .fa {
-	padding: 15px;
-	font-size: 25px;
-	color: #FFF;
+  padding: 15px;
+  font-size: 25px;
+  color: #FFF;
 }
+
 .fa:hover {
-	color: #d5d5d5;
-	text-decoration: none;
+  color: #d5d5d5;
+  text-decoration: none;
 }
+
 .icon {
-	max-width: 200px;
+  max-width: 200px;
 }
-.footer-contact > h4 {
-	font-size: 1em;
+
+.footer-contact>h4 {
+  font-size: 1em;
 }
 
 /* Media queries */
 @media (max-width: 768px) {
-	.landing-text h1 {
-		font-size: 48px;
-	}
-	.fa {
-		font-size: 20px;
-		padding: 10px;
-	}
-	.icon {
-		padding-top: 5%;
-		max-width: 100px;
-	}
+  .landing-text h1 {
+    font-size: 48px;
+  }
+
+  .fa {
+    font-size: 20px;
+    padding: 10px;
+  }
+
+  .icon {
+    padding-top: 5%;
+    max-width: 100px;
+  }
 }
+
 @media (min-width: 1024px) {
-	.submit-form, .history-section {
-		width: 600px;
-	}
+
+  .submit-form,
+  .history-section {
+    width: 600px;
+  }
 }
 
 @media (max-width: 510px) {
-	footer {
-		display: block;
-	}
+  footer {
+    display: block;
+  }
 }

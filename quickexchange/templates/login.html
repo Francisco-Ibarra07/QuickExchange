@@ -13,18 +13,18 @@
       <!-- Form group for EMAIL -->
       <div class="form-group">
         {{ form.email.label(class="form-control-label") }}
-        
+
         {% if form.email.errors %}
-        
-          {{ form.email(class="form-control form-control-lg is-invalid")}}
-          <div class="invalid-feedback">
-            {% for error in form.email.errors %}
-            <span>{{ error }}</span>
-            {% endfor %}
-          </div>
+
+        {{ form.email(class="form-control form-control-lg is-invalid")}}
+        <div class="invalid-feedback">
+          {% for error in form.email.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
 
         {% else %}
-          {{ form.email(class="form-control form-control-lg")}}
+        {{ form.email(class="form-control form-control-lg")}}
         {% endif %}
 
       </div>
@@ -32,25 +32,25 @@
       <!-- Form group for PASSWORD -->
       <div class="form-group">
         {{ form.password.label(class="form-control-label") }}
-        
+
         {% if form.password.errors %}
-        
-          {{ form.password(class="form-control form-control-lg is-invalid")}}
-          <div class="invalid-feedback">
-            {% for error in form.password.errors %}
-            <span>{{ error }}</span>
-            {% endfor %}
-          </div>
+
+        {{ form.password(class="form-control form-control-lg is-invalid")}}
+        <div class="invalid-feedback">
+          {% for error in form.password.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
 
         {% else %}
-          {{ form.password(class="form-control form-control-lg")}}
+        {{ form.password(class="form-control form-control-lg")}}
         {% endif %}
 
       </div>
 
       <div class="form-check">
-          {{ form.remember(class="form-check-input") }}
-          {{ form.remember.label(class="form-check-label") }}
+        {{ form.remember(class="form-check-input") }}
+        {{ form.remember.label(class="form-check-label") }}
       </div>
 
     </fieldset>
@@ -60,7 +60,7 @@
     </div>
 
     <small class="text-muted ml-2">
-        <a href="#">Forgot Password?</a> 
+      <a href="#">Forgot Password?</a>
     </small>
 
   </form>

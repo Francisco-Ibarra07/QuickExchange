@@ -1,92 +1,92 @@
 <!DOCTYPE html>
 <html>
 
-<head>
+  <head>
 
-  {% if title %}
-  <title>Quick Exchange - {{ title }}</title>
-  {% else %}
-  <title>Quick Exchange</title>
-  {% endif %}
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
-  <link rel="icon" href="{{ url_for('static', filename='img/favicon/favicon.ico') }}">
-
-</head>
-
-<body>
-
-  <!-- Navigation header section -->
-  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <!-- Hamburger Button -->
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-main">
-          <!-- sr-only is for people who can't see the navigation icon -->
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <!-- navbar-brand for logo images -->
-        <!-- <a class="navbar-brand" href="#"><img src="img/w3newbie.png"></a> -->
-        <a class="navbar-brand" href="{{ url_for('home') }}">
-          <span>Quick Exchange</span>
-        </a>
-      </div>
-
-      <!-- Navigation buttons -->
-      <div class="collapse navbar-collapse" id="navbar-collapse-main">
-        <ul class="nav navbar-nav navbar-right">
-          <li><a class="active" href="{{ url_for('home') }}">Home</a></li>
-
-          {% if current_user.is_authenticated %}
-          <li><a href="{{ url_for('account') }}">Account</a></li>
-          <li><a href="{{ url_for('logout') }}">Logout</a></li>
-          {% else %}
-          <li><a href="{{ url_for('about') }}">About</a></li>
-          <li><a href="{{ url_for('login') }}">Login</a></li>
-          <li><a href="{{ url_for('register') }}">Register</a></li>
-          {% endif %}
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Alert messages section -->
-  <!-- Grabs any flashed messages -->
-  {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-      <div class="alert-messages">
-        <!-- Print out all messages using for loop -->
-        {% for category, message in messages %}
-        <div class="alert alert-{{ category }}">
-          {{ message }}
-        </div>
-        {% endfor %}
-      </div>
+    {% if title %}
+    <title>Quick Exchange - {{ title }}</title>
+    {% else %}
+    <title>Quick Exchange</title>
     {% endif %}
-  {% endwith %}
 
-  {% block content %}{% endblock %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon/favicon.ico') }}">
 
-  <!-- Footer section -->
-  <footer class="container-fluid text-center">
-    <div class="col-sm-4 footer-contact">
-      <h3>Contact Us</h3>
-      <br>
-      <h4>Quick.Exchange.Contact@gmail.com</h4>
+  </head>
+
+  <body>
+
+    <!-- Navigation header section -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <!-- Hamburger Button -->
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-main">
+            <!-- sr-only is for people who can't see the navigation icon -->
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <!-- navbar-brand for logo images -->
+          <!-- <a class="navbar-brand" href="#"><img src="img/w3newbie.png"></a> -->
+          <a class="navbar-brand" href="{{ url_for('home') }}">
+            <span>Quick Exchange</span>
+          </a>
+        </div>
+
+        <!-- Navigation buttons -->
+        <div class="collapse navbar-collapse" id="navbar-collapse-main">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a class="active" href="{{ url_for('home') }}">Home</a></li>
+
+            {% if current_user.is_authenticated %}
+            <li><a href="{{ url_for('account') }}">Account</a></li>
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            {% else %}
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+            <li><a href="{{ url_for('register') }}">Register</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Alert messages section -->
+    <!-- Grabs any flashed messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="alert-messages">
+      <!-- Print out all messages using for loop -->
+      {% for category, message in messages %}
+      <div class="alert alert-{{ category }}">
+        {{ message }}
+      </div>
+      {% endfor %}
     </div>
-    <div class="col-sm-4">
-      <img src="static/img/b.png" class="icon">
-    </div>
-  </footer>
+    {% endif %}
+    {% endwith %}
 
-</body>
+    {% block content %}{% endblock %}
+
+    <!-- Footer section -->
+    <footer class="container-fluid text-center">
+      <div class="col-sm-4 footer-contact">
+        <h3>Contact Us</h3>
+        <br>
+        <h4>Quick.Exchange.Contact@gmail.com</h4>
+      </div>
+      <div class="col-sm-4">
+        <img src="static/img/b.png" class="icon">
+      </div>
+    </footer>
+
+  </body>
 
 </html>

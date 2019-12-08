@@ -13,8 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById("popButton").addEventListener("click", popButtonClickHandler);
     document.getElementById("pushButton").addEventListener("click", pushButtonClickHandler);
     populateTextAreaElement();
-  }
-  else {
+  } else {
     document.querySelector(".bg-modal").style.display = "flex";
     document.getElementById("loginButton").addEventListener("click", loginButtonClickHandler);
   }
@@ -23,8 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
   //getToken();
 });
 
-async function loginButtonClickHandler() {
-}
+async function loginButtonClickHandler() {}
 
 async function storedTokenIsValid() {
   return false;
@@ -132,8 +130,7 @@ async function pushButtonClickHandler(event) {
   if (urlInput === '' && fileInput.length === 0) {
     console.log("No url or file input found");
     return;
-  }
-  else if (urlInput !== '' && fileInput.length !== 0) {
+  } else if (urlInput !== '' && fileInput.length !== 0) {
     console.log("Can only have one or the other");
     return;
   }
@@ -158,8 +155,7 @@ async function pushButtonClickHandler(event) {
         "email": TEST_EMAIL
       })
     }
-  }
-  else if (fileInput.length !== 0) {
+  } else if (fileInput.length !== 0) {
     const formData = new FormData();
     formData.append('email', TEST_EMAIL);
     formData.append('file', fileInput[0]);
@@ -186,5 +182,3 @@ async function pushButtonClickHandler(event) {
     console.log(error);
   }
 }
-
-

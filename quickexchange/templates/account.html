@@ -9,71 +9,71 @@
     </div>
   </div>
 
-    <!-- enctype = encoding type -->
-    <form method="POST" action="" enctype="multipart/form-data"> 
-      <!-- An empty action string sends data back to itself -->
-      {{ form.hidden_tag() }}
+  <!-- enctype = encoding type -->
+  <form method="POST" action="" enctype="multipart/form-data">
+    <!-- An empty action string sends data back to itself -->
+    {{ form.hidden_tag() }}
 
-      <!-- Field sets are used to group related elements in a form -->
-      <fieldset class="form-group">
-        <!-- Form group is a bootstrap class -->
-        <legend class="border-bottom mb-4">Account Info</legend>
+    <!-- Field sets are used to group related elements in a form -->
+    <fieldset class="form-group">
+      <!-- Form group is a bootstrap class -->
+      <legend class="border-bottom mb-4">Account Info</legend>
 
-        <!-- Form group for USERNAME -->
-        <div class="form-group">
-          <!-- Prints label of username field -->
-          {{ form.username.label(class="form-control-label") }}
-
-          {% if form.username.errors %}
-          {{ form.username(class="form-control form-control-lg is-invalid")}}
-          <div class="invalid-feedback">
-            {% for error in form.username.errors %}
-            <span>{{ error }}</span>
-            {% endfor %}
-          </div>
-
-          {% else %}
-          {{ form.username(class="form-control form-control-lg")}}
-          {% endif %}
-
-        </div>
-
-        <!-- Form group for EMAIL -->
-        <div class="form-group">
-          {{ form.email.label(class="form-control-label") }}
-
-          {% if form.email.errors %}
-
-          {{ form.email(class="form-control form-control-lg is-invalid")}}
-          <div class="invalid-feedback">
-            {% for error in form.email.errors %}
-              <span>{{ error }}</span>
-            {% endfor %}
-          </div>
-
-          {% else %}
-            {{ form.email(class="form-control form-control-lg")}}
-          {% endif %}
-
-        </div>
-
-        <!-- Form group for PROFILE PICTURE -->
-        <div class="form-group">
-          {{ form.picture.label() }}
-          {{ form.picture(class="form-control-file") }}
-          {% if form.picture.errors %}
-            {% for error in form.picture.errors %}
-              <span class="text-danger">{{ error }}</span></br>
-            {% endfor %}
-          {% endif %}
-        </div>
-
-
-      </fieldset>
-
+      <!-- Form group for USERNAME -->
       <div class="form-group">
-        {{ form.submit(class="btn btn-outline-info") }}
+        <!-- Prints label of username field -->
+        {{ form.username.label(class="form-control-label") }}
+
+        {% if form.username.errors %}
+        {{ form.username(class="form-control form-control-lg is-invalid")}}
+        <div class="invalid-feedback">
+          {% for error in form.username.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+
+        {% else %}
+        {{ form.username(class="form-control form-control-lg")}}
+        {% endif %}
+
       </div>
-    </form>
+
+      <!-- Form group for EMAIL -->
+      <div class="form-group">
+        {{ form.email.label(class="form-control-label") }}
+
+        {% if form.email.errors %}
+
+        {{ form.email(class="form-control form-control-lg is-invalid")}}
+        <div class="invalid-feedback">
+          {% for error in form.email.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+
+        {% else %}
+        {{ form.email(class="form-control form-control-lg")}}
+        {% endif %}
+
+      </div>
+
+      <!-- Form group for PROFILE PICTURE -->
+      <div class="form-group">
+        {{ form.picture.label() }}
+        {{ form.picture(class="form-control-file") }}
+        {% if form.picture.errors %}
+        {% for error in form.picture.errors %}
+        <span class="text-danger">{{ error }}</span></br>
+        {% endfor %}
+        {% endif %}
+      </div>
+
+
+    </fieldset>
+
+    <div class="form-group">
+      {{ form.submit(class="btn btn-outline-info") }}
+    </div>
+  </form>
 </div>
 {% endblock content %}
