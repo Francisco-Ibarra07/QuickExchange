@@ -6,21 +6,49 @@ const TEST_PASS = "asdf";
 const DEV_URL = "http://127.0.0.1:5000";
 document.addEventListener('DOMContentLoaded', function () {
 
+  document.getElementById("copyButton").addEventListener("click", copyButtonClickHandler);
+  document.getElementById("popButton").addEventListener("click", popButtonClickHandler);
+  document.getElementById("pushButton").addEventListener("click", pushButtonClickHandler);
+  document.getElementById("showHistoryButton").addEventListener("click", showHistoryButtonClickHandler);
 
-  if (storedTokenIsValid()) {
-    document.querySelector(".bg-modal").style.display = "none";
-    document.getElementById("copyButton").addEventListener("click", copyButtonClickHandler);
-    document.getElementById("popButton").addEventListener("click", popButtonClickHandler);
-    document.getElementById("pushButton").addEventListener("click", pushButtonClickHandler);
-    populateTextAreaElement();
-  } else {
-    document.querySelector(".bg-modal").style.display = "flex";
-    document.getElementById("loginButton").addEventListener("click", loginButtonClickHandler);
-  }
+  populateTextAreaElement();
 
-  //test
+
+  //test for modal
+  // document.querySelector(".bg-modal").style.display = "none";
+  //document.getElementById("loginButton").addEventListener("click", loginButtonClickHandler);
   //getToken();
 });
+
+async function showHistoryButtonClickHandler() {
+  console.log("history btn pressed!");
+  try {
+    const url = DEV_URL + "/get-history";
+    const fetchRequestData = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "email": TEST_EMAIL
+      })
+    }
+    const response = await fetch(url, fetchRequestData);
+    const data = await response.json();
+
+    console.log(JSON.stringify(data));
+
+    if (data.hasOwnProperty("history")) {
+      for (let post of data["history"]) {
+        console.log(post);
+      }
+    } else {
+      console.log("No history key was returned");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 async function loginButtonClickHandler() {}
 

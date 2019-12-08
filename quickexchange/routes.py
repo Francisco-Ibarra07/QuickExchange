@@ -375,7 +375,7 @@ def create_url_post():
         return jsonify({"message": "error on creating new post"}), 500
 
 
-@app.route("/get-history")
+@app.route("/get-history", methods=["POST"])
 def get_history():
     request_data = request.get_json(silent=True)
     if request_data is None:
