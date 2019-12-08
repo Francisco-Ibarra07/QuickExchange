@@ -374,3 +374,56 @@ def create_url_post():
         print("error on creating new post")
         return jsonify({"message": "error on creating new post"}), 500
 
+
+@app.route("/get-history")
+def get_history():
+    request_data = request.get_json(silent=True)
+    if request_data is None:
+        print("no json supplied")
+        return jsonify({"message": "no json supplied"}), 400
+
+    # Make sure an email is provided so we can find the user
+    if "email" not in request_data:
+        print("email not supplied")
+        return jsonify({"message": "email not supplied"}), 400
+
+    # Make sure user exists
+    user_email = request_data["email"]
+    target_user = User.query.filter_by(email=user_email).first()
+    if target_user is None:
+        print("user does not exist")
+        return jsonify({"message": "user does not exist"}), 400
+
+    # Return history of posts
+    try:
+        history = (
+            reversed(target_user.posts) if len(target_user.posts) > 0 else None
+        )
+
+        if history is None:
+          print("History is empty")
+          return jsonify({"message": "history is empty"})
+        
+        # Construct a list of posts
+        history_list = []
+        for post in history:
+          # If its a url, append an object with keys 'type' and 'link'
+          if post.url:
+            history_list.append({
+              'type': 'url',
+              'link': post.url
+            })
+          # If its a file, append an object with keys 'type', 'filename', and 'link'
+          elif post.approved_filename:
+            history_list.append({
+              'type': 'file',
+              'filename': post.approved_filename,
+              'link': url_for("static", filename="uploads/" + post.hashed_filename)
+            })
+        
+        return jsonify({"message": "history found", "history": history_list})
+
+    except:
+        print("error on getting history")
+        return jsonify({"message": "error on getting history"}), 500
+
