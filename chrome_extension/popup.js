@@ -5,14 +5,30 @@ const TEST_EMAIL = "hmd@m.com";
 const TEST_PASS = "asdf";
 const DEV_URL = "http://127.0.0.1:5000";
 document.addEventListener('DOMContentLoaded', function () {
-  document.getElementById("copyButton").addEventListener("click", copyButtonClickHandler);
-  document.getElementById("popButton").addEventListener("click", popButtonClickHandler);
-  document.getElementById("pushButton").addEventListener("click", pushButtonClickHandler);
-  populateTextAreaElement();
+
+
+  if (storedTokenIsValid()) {
+    document.querySelector(".bg-modal").style.display = "none";
+    document.getElementById("copyButton").addEventListener("click", copyButtonClickHandler);
+    document.getElementById("popButton").addEventListener("click", popButtonClickHandler);
+    document.getElementById("pushButton").addEventListener("click", pushButtonClickHandler);
+    populateTextAreaElement();
+  }
+  else {
+    document.querySelector(".bg-modal").style.display = "flex";
+    document.getElementById("loginButton").addEventListener("click", loginButtonClickHandler);
+  }
 
   //test
   //getToken();
 });
+
+async function loginButtonClickHandler() {
+}
+
+async function storedTokenIsValid() {
+  return false;
+}
 
 async function getToken() {
 
