@@ -1,4 +1,49 @@
 {% extends "layout.html" %}
 {% block content %}
-<h1>About Page</h1>
+<div class="container">
+  <div class="files-allowed-section">
+    <article>
+      <section class="article-container">
+        <h1>Files you can store in QuickExchange</h1>
+        <div class="article-inner-content">
+          <h2>File sizes</h2>
+          <div>
+            <p>The file size depends on which type of content you submit.</p>
+            <ul>
+              <li><strong>Video files:</strong> Up to 100 MB </li>
+              <li><strong>Spreadsheets:</strong> Up to 100 MB </li>
+              <li><strong>Images:</strong> Up to 100 MB </li>
+            </ul>
+          </div>
+
+          <h2>Supported file types</h2>
+          <p>QuickExchange supports most types of files! Here is a list of the ones that we support:</p>
+          <div>
+            <p><strong>General file types</strong></p>
+
+            <ul>
+              <li>Archive files (.ZIP, .RAR, tar, gzip)</li>
+              <li>Audio formats (MP3, MPEG, WAV, .ogg, .opus)</li>
+              <li>Image files (.JPEG, .PNG, .GIF, .BMP, .TIFF, .SVG)</li>
+              <li>Markup/Code (.CSS, .HTML, .PHP, .C, .CPP, .H, .HPP, .JS, .java, .py)</li>
+              <li>Text files (.TXT)</li>
+              <li>Video files (WebM, .MPEG4, .3GPP, .MOV, .AVI, .MPEGPS, .WMV, .FLV, .ogg)</li>
+            </ul>
+          </div>
+          <div>
+            <p><strong>Microsoft files</strong></p>
+
+            <ul>
+              <li>Excel (.XLS and .XLSX)</li>
+              <li>PowerPoint (.PPT and .PPTX)</li>
+              <li>Word (.DOC and .DOCX)</li>
+              <li>XML Paper Specification (.XPS)</li>
+              <li>Password-protected Microsoft Office files</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </article>
+  </div>
+</div>
 {% endblock content %}
