@@ -69,22 +69,19 @@ class DataPost(db.Model):
             print("Error on adding and commiting new data post")
 
     @classmethod
-    def create_new_file_post(
-        cls, author, approved_filename, hashed_filename, storage_path
-    ):
-        if (
-            (not author)
-            or (not approved_filename)
-            or (not hashed_filename)
-            or (not storage_path)
-        ):
+    def create_new_file_post(cls, author, approved_filename, \
+                                  hashed_filename, storage_path):
+        if ((not author) or (not approved_filename) 
+              or (not hashed_filename) or (not storage_path)):
             print(
                 f"Invalid inputs: {author}, {approved_filename}, {hashed_filename}, {storage_path}"
             )
             return
 
+        # If we have reached our post limit, delete the oldest post
         if len(author.posts) >= app.config["MAX_DATAPOSTS_ALLOWED"]:
             deleteMe = author.posts.pop(0)
+            print(f"Max post limit reached. Deleting: {deleteMe}")
             cls.delete(deleteMe)
 
         try:

@@ -231,14 +231,22 @@ def about():
     return render_template("about.html", title="About")
 
 
-@app.route("/get-latest-post")
+@app.route("/get-latest-post", methods=["POST"])
 def get_latest_post():
-    # Make sure user email is passed in
-    user_email = request.args.get("email")
-    if user_email is None:
+
+    # Make sure json data is passed in
+    request_data = request.get_json(silent=True)
+    if request_data is None:
+        print("no json supplied")
+        return jsonify({"message": "no json supplied"}), 400
+
+    # Make sure an email is provided so we can find the user
+    if "email" not in request_data:
+        print("email not supplied")
         return jsonify({"message": "email not supplied"}), 400
 
     # Make sure user exists
+    user_email = request_data["email"]
     target_user = User.query.filter_by(email=user_email).first()
     if target_user is None:
         return jsonify({"message": "user does not exist"}), 400
@@ -322,7 +330,7 @@ def create_file_post():
             storage_path=filepath_for_storage,
         )
 
-        return jsonify({"message": "new post created"}), 200
+        return jsonify({"message": "new post created"}), 201
     except:
         print("error on creating new post")
         return jsonify({"message": "error on creating new post"}), 500
@@ -346,8 +354,8 @@ def create_url_post():
     # Have silent set to true so it can return None if DNE
     request_data = request.get_json(silent=True)
     if request_data is None:
-        print("no data supplied")
-        return jsonify({"message": "no data supplied"}), 400
+        print("no json supplied")
+        return jsonify({"message": "no json supplied"}), 400
 
     # Make sure an email is provided so we can find the user
     if "email" not in request_data:
@@ -369,7 +377,7 @@ def create_url_post():
     try:
         print(f'url supplied: {request_data["url"]}')
         DataPost.create_new_url_post(url=request_data["url"], author=target_user)
-        return jsonify({"message": "new post created", "url": request_data["url"]}), 200
+        return jsonify({"message": "new post created", "url": request_data["url"]}), 201
     except:
         print("error on creating new post")
         return jsonify({"message": "error on creating new post"}), 500
@@ -421,7 +429,7 @@ def get_history():
               'link': url_for("static", filename="uploads/" + post.hashed_filename)
             })
         
-        return jsonify({"message": "history found", "history": history_list})
+        return jsonify({"message": "history found", "history": history_list}), 200
 
     except:
         print("error on getting history")
