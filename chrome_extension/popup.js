@@ -20,34 +20,38 @@ document.addEventListener('DOMContentLoaded', function () {
   //getToken();
 });
 
-async function showHistoryButtonClickHandler() {
-  console.log("history btn pressed!");
-  try {
-    const url = DEV_URL + "/get-history";
-    const fetchRequestData = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        "email": TEST_EMAIL
-      })
-    }
-    const response = await fetch(url, fetchRequestData);
-    const data = await response.json();
-
-    console.log(JSON.stringify(data));
-
-    if (data.hasOwnProperty("history")) {
-      for (let post of data["history"]) {
-        console.log(post);
-      }
-    } else {
-      console.log("No history key was returned");
-    }
-  } catch (error) {
-    console.log(error);
+function showHistoryButtonClickHandler() {
+  const targetURL = DEV_URL + "/get-history";
+  const fetchRequestData = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      "email": TEST_EMAIL
+    })
   }
+
+  fetch(targetURL, fetchRequestData)
+    .then((response) => {
+      if (response.status !== 200) {
+        console.log("Error on show history. Status Code: " + response.status);
+        return;
+      }
+
+      response.json().then((data) => {
+        if (data.hasOwnProperty("history")) {
+          for (let post of data["history"]) {
+            console.log(post);
+          }
+        } else {
+          console.log("No history key was returned");
+        }
+      })
+    })
+    .catch((error) => {
+      console.log("Fetch error: ", error);
+    })
 }
 
 async function loginButtonClickHandler() {}
@@ -61,8 +65,8 @@ async function getToken() {
   try {
     const username = TEST_EMAIL;
     const password = TEST_PASS;
-    const url = DEV_URL + "/auth";
-    const response = await fetch(url, {
+    const targetURL = DEV_URL + "/auth";
+    const response = await fetch(targetURL, {
       headers: new Headers({
         'Authorization': 'Basic ' + btoa(username + ':' + password),
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -94,22 +98,39 @@ async function getToken() {
 
 
 // Fetch latest post url from Flask route
-async function populateTextAreaElement() {
-  try {
-    const url = DEV_URL + "/get-latest-post?email=" + TEST_EMAIL;
-    const response = await fetch(url);
-    const data = await response.json();
+function populateTextAreaElement() {
 
-    let textareaElement = document.getElementById("currentStoredMediaBox");
-    // Set textarea value to fetched url
-    if (data.hasOwnProperty('url')) {
-      textareaElement.value = data['url'];
-    } else {
-      console.log('url or message property not found in: ', data);
-    }
-  } catch (error) {
-    console.log(error);
+  const targetURL = DEV_URL + "/get-latest-post";
+  const fetchRequestData = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      "email": TEST_EMAIL
+    })
   }
+
+  fetch(targetURL, fetchRequestData)
+    .then((response) => {
+      if (response.status !== 200) {
+        console.log("Error on populate text area. Status Code: " + response.status);
+        return;
+      }
+
+      response.json().then((data) => {
+        let textareaElement = document.getElementById("currentStoredMediaBox");
+        // Set textarea value to fetched url
+        if (data.hasOwnProperty('url')) {
+          textareaElement.value = data['url'];
+        } else {
+          console.log('url or message property not found in: ', data);
+        }
+      })
+    })
+    .catch((error) => {
+      console.log("Fetch error: ", error);
+    })
 }
 
 function copyButtonClickHandler(event) {
@@ -120,9 +141,9 @@ function copyButtonClickHandler(event) {
     .then(() => {
       console.log('Text copied to clipboard');
     })
-    .catch(err => {
+    .catch((error) => {
       // This can happen if the user denies clipboard permissions:
-      console.error('Could not copy text: ', err);
+      console.error('Could not copy text: ', error);
     });
 }
 
@@ -163,8 +184,8 @@ async function pushButtonClickHandler(event) {
     return;
   }
 
-  let fetchRequestData = undefined;
-  let targetUrl = undefined;
+  let fetchRequestData = '';
+  let targetUrl = '';
   if (urlInput !== '') {
 
     if (!isValidUrl(urlInput)) {
@@ -198,15 +219,21 @@ async function pushButtonClickHandler(event) {
   console.log("Testing fetchRequestData:", fetchRequestData);
   console.log("Sending to:", targetUrl);
 
-  try {
-    // Create post request
-    const response = await fetch(targetUrl, fetchRequestData);
+  fetch(targetUrl, fetchRequestData)
+    .then((response) => {
 
-    // Wait for data 
-    const responseData = await response.json();
-    console.log("Response after fetch(): ", responseData);
-    location.reload();
-  } catch (error) {
-    console.log(error);
-  }
+      if (response.status !== 201) {
+        console.log("Error on creating file post. Status Code: " + response.status);
+        return;
+      }
+
+      response.json().then((data) => {
+        console.log("Response after fetch(): ", data);
+        location.reload();
+      })
+
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }
