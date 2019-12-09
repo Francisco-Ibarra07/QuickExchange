@@ -233,6 +233,7 @@ async function pushButtonClickHandler(event) {
       })
 
     })
+    // TODO: Show error messages when fetch fails. We can retry or show error message feedback/modal
     .catch((error) => {
       console.log(error);
     });

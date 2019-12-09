@@ -19,6 +19,9 @@
     </nav>
 
     <!-- Main form which includes text box, file uploads, media stored, and history -->
+    <!-- TODO: Need to create error message feedback when user inputs both url and file.
+      Maybe disable the other if one is used? -->
+    <!-- TODO: Need to create error message feedback in general  -->
     <div class="extension--main-form">
       <div class="extension--push-form">
         <!-- Url Input -->
@@ -31,7 +34,10 @@
         <div class="form-group">
           <label>File Upload</label>
           <div class="custom-file">
+            <!-- TODO: Make this 'file upload' button pretty :) -->
+            <!-- IDEA: For multiple file uploads, we can zip them up serverside and store them that way -->
             <input type="file" name="file" id="fileInput" class="">
+            <!-- FIXME: This label is messing up the modal view :/ -->
             <!-- <label class="">Choose file</label> -->
           </div>
         </div>
@@ -67,6 +73,8 @@
     </div>
 
     <!-- Modal -->
+    <!-- TODO: Include a modal popup in order to login the user before using extension -->
+    <!-- TODO: Speaking of modals, have a loading screen while things get submitted or are retrieved?  -->
     <!-- <div class="bg-modal">
       <div class="modal-content">
         <h1 class="modal-title">You need to log in first!</h1>

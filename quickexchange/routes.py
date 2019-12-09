@@ -1,3 +1,4 @@
+# TODO: Fix indent spacing (on all py files) to only 2 spaces (its ewww rn 😝)
 import os
 import jwt
 import secrets
@@ -21,6 +22,7 @@ def root():
     return redirect(url_for("home"))
 
 
+# TODO: Make use of the Flask Form validators for things like URL or file upload types
 @app.route("/home", methods=["GET", "POST"])
 def home():
     form = DataPostForm()
@@ -275,8 +277,9 @@ def get_latest_post():
 
 
 # Inputs -> File and form data
-# In betwee, -> Validate file(s) and user. Store new file if its correct
+# In between, -> Validate file(s) and user. Store new file if its correct
 # Output -> Sucess or failure message
+# TODO: Find a way to check for file size before uploading (maybe do it in the JS before sending?)
 @app.route("/create-file-post", methods=["GET", "POST"])
 def create_file_post():
 
