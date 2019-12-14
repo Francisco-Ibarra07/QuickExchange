@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
@@ -19,6 +20,8 @@ from quickexchange import routes
 
 @app.before_first_request
 def create_tables():
+    if not os.path.exists(app.config["FILE_UPLOAD_PATH"]):
+        os.makedirs(app.config["FILE_UPLOAD_PATH"])
     db.create_all()
 
 
