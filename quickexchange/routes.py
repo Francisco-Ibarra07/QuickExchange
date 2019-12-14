@@ -1,4 +1,3 @@
-# TODO: Fix indent spacing (on all py files) to only 2 spaces (its ewww rn 😝)
 import os
 import jwt
 import secrets
@@ -22,7 +21,7 @@ def root():
     return redirect(url_for("home"))
 
 
-# TODO: Make use of the Flask Form validators for things like URL or file upload types
+# TODO: Make use of the Flask Form validators for things like URL
 @app.route("/home", methods=["GET", "POST"])
 def home():
     form = DataPostForm()
@@ -147,9 +146,7 @@ def register():
         db.session.commit()
 
         login_user(user)
-        flash(
-            f"Your account has been created!", "success"
-        )  # Displays a message at the top
+        flash(f"Your account has been created!", "success")
         return redirect(url_for("home"))  # Then we redirect the user to home page
 
     return render_template("register.html", title="Register", form=form)

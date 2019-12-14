@@ -41,9 +41,7 @@ class RegistrationForm(FlaskForm):
 
 class DataPostForm(FlaskForm):
     url = StringField("URL Link", validators=[URL()])
-    file = FileField(
-        "File Uploads", validators=[FileAllowed(["jpg", "png", "gif", "jpeg"])]
-    )
+    file = FileField("File Uploads")
     push_button = SubmitField("Push")
     pop_button = SubmitField("Pop")
 
