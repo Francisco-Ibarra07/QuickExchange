@@ -4,6 +4,7 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
+from flask_jwt import JWT
 
 app = Flask(__name__, instance_relative_config=True)
 app.config.from_pyfile("config.py")
@@ -16,6 +17,8 @@ login_manager.login_message_category = "info"
 
 # Import here to avoid circular imports
 from quickexchange import routes
+from quickexchange.security import authenticate, identity
+jwt = JWT(app, authenticate, identity)
 
 
 @app.before_first_request
