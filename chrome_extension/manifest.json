@@ -19,6 +19,11 @@
     "default_popup": "popup.html",
     "default_title": "QuickExchange"
   },
+  "icons": { 
+    "16": "favicon/favicon-16x16.png",
+    "48": "favicon/favicon-32x32.png",
+   "128": "favicon/android-chrome-192x192.png" 
+  },
   "permissions": [
     "storage"
   ]
