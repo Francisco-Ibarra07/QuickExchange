@@ -4,7 +4,9 @@
     <title>Quick Exhange - Popup</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="extension-main.css">
+    <link rel="icon" href="favicon/favicon.ico">
   </head>
 
   <body>
@@ -75,16 +77,16 @@
     <!-- Modal -->
     <!-- TODO: Include a modal popup in order to login the user before using extension -->
     <!-- TODO: Speaking of modals, have a loading screen while things get submitted or are retrieved?  -->
-    <!-- <div class="bg-modal">
+    <div class="modal" id="login-modal">
       <div class="modal-content">
         <h1 class="modal-title">You need to log in first!</h1>
         <div class="form-group">
-          <input type="text" name="email" id="emailInput" placeholder="Email" class="login-input">
-          <input type="text" name="password" id="passwordInput" placeholder="Password" class="login-input">
+          <input type="text" name="email" id="emailInput" placeholder="Email" class="login-input" required>
+          <input type="password" name="password" id="passwordInput" placeholder="Password" class="login-input" required>
           <button id="loginButton" class="btn btn-primary">Login</button>
         </div>
       </div>
-    </div> -->
+    </div>
 
     <script type="text/javascript" src="popup.js"></script>
   </body>
