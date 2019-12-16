@@ -1,5 +1,7 @@
 console.log("Popup.js running");
 
+// TODO: Put error messages when: wrong credentials, session expired, bad push button info, etc.
+// TODO: Setup a 'reset password' function that takes user to website to reset password
 const DEV_URL = "http://127.0.0.1:5000";
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -15,7 +17,6 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     .catch((error) => {
       console.log(error);
-      //document.getElementById("loginButton").addEventListener("click", loginButtonClickHandler);
     });
 });
 
@@ -169,7 +170,7 @@ function showHistoryButtonClickHandler() {
       'Authorization': 'JWT ' + window.jwt_token
     },
     body: JSON.stringify({
-      "email": TEST_EMAIL
+      "email": window.email
     })
   }
 
