@@ -12,6 +12,7 @@ from quickexchange.forms import (
     DataPostForm,
 )
 from flask import Markup
+from flask_jwt import jwt_required
 from flask import render_template, url_for, flash, redirect, request, jsonify
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -98,34 +99,6 @@ def home():
         history=history,
         max_dataposts_allowed=app.config["MAX_DATAPOSTS_ALLOWED"],
     )
-
-
-@app.route("/auth")
-def authenticate():
-    auth = request.authorization
-    if not auth or not auth.username or not auth.password:
-        return jsonify({"message": "incorrect inputs"}), 401
-
-    user = User.query.filter_by(email=auth.username).first()
-
-    if user is None:
-        return jsonify({"message": "user does not exist!"}), 401
-
-    # Create and return new token if credentials pass
-    if bcrypt.check_password_hash(user.password, auth.password):
-        token = jwt.encode(
-            {
-                "user": user.email,
-                "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=1),
-            },
-            app.config["SECRET_KEY"],
-        )
-        return jsonify({"token": token.decode("UTF-8")})
-    else:
-        return (
-            jsonify({"message": "Login Unsuccessful. Please check email and password"}),
-            401,
-        )
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -231,6 +204,7 @@ def about():
 
 
 @app.route("/get-latest-post", methods=["POST"])
+@jwt_required()
 def get_latest_post():
 
     # Make sure json data is passed in
@@ -278,6 +252,7 @@ def get_latest_post():
 # Output -> Sucess or failure message
 # TODO: Find a way to check for file size before uploading (maybe do it in the JS before sending?)
 @app.route("/create-file-post", methods=["GET", "POST"])
+@jwt_required()
 def create_file_post():
 
     # Get input files
@@ -349,6 +324,7 @@ def allowed_file(filename):
 # In Between-> Validate input, and store url if correct
 # Output -> success or failure message
 @app.route("/create-url-post", methods=["GET", "POST"])
+@jwt_required()
 def create_url_post():
 
     # Have silent set to true so it can return None if DNE
@@ -384,6 +360,7 @@ def create_url_post():
 
 
 @app.route("/get-history", methods=["POST"])
+@jwt_required()
 def get_history():
     request_data = request.get_json(silent=True)
     if request_data is None:
