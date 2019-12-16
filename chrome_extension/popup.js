@@ -1,25 +1,92 @@
 console.log("Popup.js running");
 
-// TODO(FI): Replace test email with actual email
+// TODO(FI): Replace test email with actual email (USE WINDOWS global)
 const TEST_EMAIL = "hmd@m.com";
 const TEST_PASS = "asdf";
 const DEV_URL = "http://127.0.0.1:5000";
 document.addEventListener('DOMContentLoaded', function () {
 
-  document.getElementById("loginButton").addEventListener("click", loginButtonClickHandler);
-  document.getElementById("copyButton").addEventListener("click", copyButtonClickHandler);
-  document.getElementById("popButton").addEventListener("click", popButtonClickHandler);
-  document.getElementById("pushButton").addEventListener("click", pushButtonClickHandler);
-  document.getElementById("showHistoryButton").addEventListener("click", showHistoryButtonClickHandler);
-
-  populateTextAreaElement();
-
-
-  //test for modal
-  // document.querySelector(".bg-modal").style.display = "none";
-  //document.getElementById("loginButton").addEventListener("click", loginButtonClickHandler);
-  //getToken();
+  init()
+    .then(() => {
+      console.log("Starting init stuff");
+      document.getElementById("loginButton").addEventListener("click", loginButtonClickHandler);
+      document.getElementById("copyButton").addEventListener("click", copyButtonClickHandler);
+      document.getElementById("popButton").addEventListener("click", popButtonClickHandler);
+      document.getElementById("pushButton").addEventListener("click", pushButtonClickHandler);
+      document.getElementById("showHistoryButton").addEventListener("click", showHistoryButtonClickHandler);
+      populateTextAreaElement();
+    })
+    .catch((error) => {
+      console.log(error);
+      //document.getElementById("loginButton").addEventListener("click", loginButtonClickHandler);
+    });
 });
+
+// Populates the 'window' global vars
+function init() {
+  return new Promise((resolve, reject) => {
+
+    chrome.storage.sync.get(["jwt_token", "email"], function (result) {
+      console.log("Result:", result);
+
+      if (result.jwt_token === "" || result.email === "") {
+        const errorMsg = {
+          msg: "Empty results",
+          error: [result.jwt_token, result.email]
+        }
+        console.log("Rejected");
+        reject(errorMsg);
+      }
+      else {
+        window.jwt_token = result.jwt_token;
+        window.email = result.email
+        console.log("Update successful");
+        resolve();
+      }
+    });
+  });
+}
+
+function showLoginModal() {
+  document.querySelector("#login-modal").style.display = "flex";
+}
+
+function hideLoginModal() {
+  document.querySelector("#login-modal").style.display = "none";
+}
+
+// TODO: Validate JWT token before allowing any requests to be made. If invalid redo login for user
+function validateJWT() {
+
+  if (window.jwt_token === "") {
+    return false;
+  }
+
+  let parsedToken = parseJWT(window.jwt_token);
+  console.log("pasredtoken: ", parsedToken);
+
+  const now = Date.now();
+  if (now >= parsedToken["exp"] * 1000) {
+    console.log("now: ", now);
+    console.log("token:", parsedToken.exp * 1000);
+    return false;
+  }
+
+  console.log("TRUEEE");
+  console.log("now: ", now);
+  console.log("token:", parsedToken.exp);
+  return true;
+}
+
+function parseJWT (token) {
+  var base64Url = token.split('.')[1];
+  var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+  }).join(''));
+
+  return JSON.parse(jsonPayload);
+}; 
 
 function isValidEmail(email) {
   var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -63,12 +130,22 @@ function loginButtonClickHandler() {
         console.log("Password was incorrect!");
         return;
       }
-
+      
+      // Get token
       response.json().then((data) => {
         console.log(data);
         console.log("Everything checks out");
         console.log(email, password);
-        $("#login-modal").hide()
+
+        // Store token in storage
+        const storeMe = {
+          "jwt_token": data["access_token"],
+          "email": email
+        }
+        chrome.storage.sync.set(storeMe, function() {
+          console.log("Data stored!");
+          location.reload();
+        })
       })
     })
     .catch((error) => {
@@ -77,11 +154,22 @@ function loginButtonClickHandler() {
 }
 
 function showHistoryButtonClickHandler() {
+
+  if(!validateJWT()) {
+    console.log("JWT is currently invalid");
+    showLoginModal();
+    return;
+  }
+  else {
+    hideLoginModal();
+  }
+
   const targetURL = DEV_URL + "/get-history";
   const fetchRequestData = {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'JWT ' + window.jwt_token
     },
     body: JSON.stringify({
       "email": TEST_EMAIL
@@ -110,51 +198,25 @@ function showHistoryButtonClickHandler() {
     })
 }
 
-async function getToken() {
-
-  try {
-    const username = TEST_EMAIL;
-    const password = TEST_PASS;
-    const targetURL = DEV_URL + "/auth";
-    const response = await fetch(targetURL, {
-      headers: new Headers({
-        'Authorization': 'Basic ' + btoa(username + ':' + password),
-        'Content-Type': 'application/x-www-form-urlencoded'
-      })
-    });
-
-    const data = await response.json();
-    console.log(data);
-
-    // Store token if it was given
-    if (data.hasOwnProperty('token')) {
-      const token = data['token'];
-      // How to store
-      // await chrome.storage.sync.set({"token": token}, function() {
-      //   console.log("Value stored!");
-      // });
-
-      // How to retrieve
-      await chrome.storage.sync.get(['token'], function (result) {
-        console.log("Result:", result);
-      });
-    }
-
-
-  } catch (error) {
-    console.log(error);
-  }
-}
-
 
 // Fetch latest post url from Flask route
 function populateTextAreaElement() {
+
+  if(!validateJWT()) {
+    console.log("JWT is currently invalid");
+    showLoginModal();
+    return;
+  }
+  else {
+    hideLoginModal();
+  }
 
   const targetURL = DEV_URL + "/get-latest-post";
   const fetchRequestData = {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'JWT ' + window.jwt_token
     },
     body: JSON.stringify({
       "email": TEST_EMAIL
@@ -198,6 +260,16 @@ function copyButtonClickHandler(event) {
 }
 
 function popButtonClickHandler(event) {
+
+  if(!validateJWT()) {
+    console.log("JWT is currently invalid");
+    showLoginModal();
+    return;
+  }
+  else {
+    hideLoginModal();
+  }
+
   console.log("Pop button pressed");
   let textareaElement = document.getElementById("currentStoredMediaBox");
   const url = textareaElement.value;
@@ -222,7 +294,17 @@ const isValidUrl = (string) => {
 }
 
 // Will validate data and will call an async function to make the post request
-async function pushButtonClickHandler(event) {
+function pushButtonClickHandler(event) {
+
+  if(!validateJWT()) {
+    console.log("JWT is currently invalid");
+    showLoginModal();
+    return;
+  }
+  else {
+    hideLoginModal();
+  }
+
   const urlInput = document.getElementById("urlInput").value;
   const fileInput = document.getElementById("fileInput").files;
 
@@ -247,7 +329,8 @@ async function pushButtonClickHandler(event) {
     fetchRequestData = {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'JWT ' + window.jwt_token
       },
       body: JSON.stringify({
         "url": urlInput,
@@ -262,6 +345,9 @@ async function pushButtonClickHandler(event) {
     targetUrl = DEV_URL + '/create-file-post';
     fetchRequestData = {
       method: 'POST',
+      headers: {
+        'Authorization': 'JWT ' + window.jwt_token
+      },
       body: formData
     }
   }
