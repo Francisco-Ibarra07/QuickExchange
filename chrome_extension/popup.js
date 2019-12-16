@@ -6,6 +6,7 @@ const TEST_PASS = "asdf";
 const DEV_URL = "http://127.0.0.1:5000";
 document.addEventListener('DOMContentLoaded', function () {
 
+  document.getElementById("loginButton").addEventListener("click", loginButtonClickHandler);
   document.getElementById("copyButton").addEventListener("click", copyButtonClickHandler);
   document.getElementById("popButton").addEventListener("click", popButtonClickHandler);
   document.getElementById("pushButton").addEventListener("click", pushButtonClickHandler);
@@ -19,6 +20,61 @@ document.addEventListener('DOMContentLoaded', function () {
   //document.getElementById("loginButton").addEventListener("click", loginButtonClickHandler);
   //getToken();
 });
+
+function isValidEmail(email) {
+  var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return regex.test(String(email).toLowerCase());
+}
+
+function loginButtonClickHandler() {
+
+  const email = document.getElementById("emailInput").value;
+  const password = document.getElementById("passwordInput").value;
+
+  if (email === "") {
+    console.log("Email not provided");
+    return;
+  }
+  else if (!isValidEmail(email)) {
+    console.log("Email format is invalid");
+    return;
+  }
+  else if (password === "") {
+    console.log("Password not provided");
+    return;
+  }
+
+  const targetURL = DEV_URL + "/auth";
+  const fetchRequestData = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      "username": email,
+      "password": password
+    })
+  }
+
+  fetch(targetURL, fetchRequestData)
+    .then((response) => {
+
+      if (response.status === 401) {
+        console.log("Password was incorrect!");
+        return;
+      }
+
+      response.json().then((data) => {
+        console.log(data);
+        console.log("Everything checks out");
+        console.log(email, password);
+        $("#login-modal").hide()
+      })
+    })
+    .catch((error) => {
+      console.log("Fetch error: ", error);
+    })
+}
 
 function showHistoryButtonClickHandler() {
   const targetURL = DEV_URL + "/get-history";
@@ -52,12 +108,6 @@ function showHistoryButtonClickHandler() {
     .catch((error) => {
       console.log("Fetch error: ", error);
     })
-}
-
-async function loginButtonClickHandler() {}
-
-async function storedTokenIsValid() {
-  return false;
 }
 
 async function getToken() {
