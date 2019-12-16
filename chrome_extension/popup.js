@@ -1,8 +1,5 @@
 console.log("Popup.js running");
 
-// TODO(FI): Replace test email with actual email (USE WINDOWS global)
-const TEST_EMAIL = "hmd@m.com";
-const TEST_PASS = "asdf";
 const DEV_URL = "http://127.0.0.1:5000";
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -219,7 +216,7 @@ function populateTextAreaElement() {
       'Authorization': 'JWT ' + window.jwt_token
     },
     body: JSON.stringify({
-      "email": TEST_EMAIL
+      "email": window.email
     })
   }
 
@@ -334,12 +331,12 @@ function pushButtonClickHandler(event) {
       },
       body: JSON.stringify({
         "url": urlInput,
-        "email": TEST_EMAIL
+        "email": window.email
       })
     }
   } else if (fileInput.length !== 0) {
     const formData = new FormData();
-    formData.append('email', TEST_EMAIL);
+    formData.append('email', window.email);
     formData.append('file', fileInput[0]);
 
     targetUrl = DEV_URL + '/create-file-post';
