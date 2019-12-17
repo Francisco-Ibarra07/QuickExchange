@@ -16,7 +16,11 @@ Have you ever had a friend who has sent you a URL link, photo, or PDF file to yo
 Introducing QuickExchange, a fast, reliable, and secure way of transfering files or URL links from one device to another. QuickExchange is entirely web-based, no need to download any sort of application on your laptop or mobile device. Simply create a [free account](https://quickexchange.pythonanywhere.com/register) and you can then begin to use the app! 
 
 ## How it works
-When you login with your new account, you are given a what we call a Stack. 
+When you login with your new account, you are given a what we call a **Stack**. Let's say that you want to transfer a file over from your phone to your laptop. Simply login to QuickExchange from your phone and **push** your file onto your personal **Stack**. Then from your laptop, or any other device, go onto the same QuickExchange app and **pop** your file out so you can view/download it. You can repeat this process to exchange any <a href="https://quickexchange.pythonanywhere.com/about" target="_blank">file types</a> between any sort of device.
+
+Better yet, we created a Google Chrome extension that you can use! You can now have access to your Stack at any point in your browsing experience. 
+
+Check out our video demonstration of the QuickExchange app in action <a href="https://quickexchange.pythonanywhere.com/home#how-it-works-section" target="_blank">here</a>
 
 ## Built With
 * [Flask](https://palletsprojects.com/p/flask/)
