@@ -3,12 +3,15 @@
 </p>
 
 [![Build Status](https://travis-ci.org/Francisco-Ibarra07/QuickExchange.svg?branch=master)](https://travis-ci.org/Francisco-Ibarra07/QuickExchange)
-# QuickExchange (Site is currently a work in progress)
 
+# QuickExchange (Site is currently a work in progress)
 Use QuickExchange as your middleman to swap pictures, URL links, videos, or files between any mobile or desktop platform.
 
 ## Motivation
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue consectetur condimentum. Etiam euismod aliquet sem. Quisque auctor id ipsum ac faucibus. Donec varius rutrum eros, rhoncus faucibus purus eleifend vel. Curabitur venenatis luctus sem eu egestas. Cras quam sem, suscipit sed massa quis.
+Have you ever had a friend who has sent you a URL link, photo, or PDF file to your phone and you wish to open this content on your laptop or on another device? If you have Apple related products, the AirDrop feature would get the job done of transfering the content from your phone to your laptop. But if you are like me who owns a iPhone and uses Windows PC, AirDrop isn't an option. 
+
+Introducing QuickExchange, a fast, reliable, and secure way of transfering files or URL links from one device to another. QuickExchange is entirely web based, no need to download any sort of application on your laptop or mobile device. Simply create a free account 
+
 
 ## Built With
 * [Flask](https://palletsprojects.com/p/flask/)
