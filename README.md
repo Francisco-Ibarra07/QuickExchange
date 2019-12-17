@@ -7,6 +7,8 @@
 # QuickExchange (Site is currently a work in progress)
 Use QuickExchange as your middleman to swap pictures, URL links, videos, or files between any mobile or desktop platform.
 
+Link to prototype website: https://quickexchange.pythonanywhere.com/home
+
 ## Motivation
 Have you ever had a friend who has sent you a URL link, photo, or PDF file to your phone and you wish to open this content on your laptop or on another device? If you have Apple related products, the AirDrop feature would get the job done of transfering the content from your phone to your laptop. But if you are like me who owns a iPhone and uses Windows PC, AirDrop isn't an option. 
 
