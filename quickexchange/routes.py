@@ -235,7 +235,7 @@ def get_latest_post():
         )
     elif latest_post.approved_filename:
         file_path = url_for("static", filename="uploads/" + latest_post.hashed_filename)
-        url_for_TESTING = f"http://127.0.0.1:5000{file_path}"
+        url_for_TESTING = app.config["SITE_URL"] + file_path
         return (
             jsonify({"message": "post found", "type": "url", "url": url_for_TESTING}),
             200,
