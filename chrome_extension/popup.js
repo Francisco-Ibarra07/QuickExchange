@@ -2,7 +2,8 @@ console.log("Popup.js running");
 
 // TODO: Put error messages when: wrong credentials, session expired, bad push button info, etc.
 // TODO: Setup a 'reset password' function that takes user to website to reset password
-const DEV_URL = "http://127.0.0.1:5000";
+// const DEV_URL = "http://127.0.0.1:5000";
+const DEV_URL = "https://quickexchange.pythonanywhere.com";
 document.addEventListener('DOMContentLoaded', function () {
 
   init()
