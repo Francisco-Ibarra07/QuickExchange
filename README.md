@@ -23,10 +23,10 @@ Better yet, we created a Google Chrome extension that you can use! You can now h
 Check out our video demonstration of the QuickExchange app in action <a href="https://quickexchange.pythonanywhere.com/home#how-it-works-section" target="_blank">here</a>
 
 ## Built With
+* JavaScript, HTML, CSS
 * [Flask](https://palletsprojects.com/p/flask/)
 * [Python 3.7](https://www.python.org)
 * [SQLAlchemy](https://www.sqlalchemy.org)
-* [Bootstrap](https://getbootstrap.com)
 
 ## Features
 - You get access to our chrome extension! Which allows you to use QuickExchange without having to go to our main site everytime.
