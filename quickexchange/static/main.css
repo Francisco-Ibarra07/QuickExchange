@@ -112,10 +112,8 @@ body {
 }
 
 .home-wrapper {
-  /* border: black dashed 1px; */
   background-color: rgba(0, 0, 0, 0.562);
   padding: 0 30px;
-  /* width: 50%; */
 }
 
 .landing-text {
@@ -132,6 +130,11 @@ body {
 .landing-text h1 {
   font-size: 60px;
   font-weight: 700%;
+}
+
+.landing-text h3 {
+  margin-top: 0px;
+  margin-bottom: 20px;
 }
 
 #fixed {
