@@ -165,7 +165,7 @@ def account():
             f_name, f_ext = os.path.splitext(secure_filename(img_file.filename))
             new_img_filename = random_hex + f_ext
             img_storage_path = os.path.join(
-                app.root_path, "static/profile_pics", new_img_filename
+                app.root_path, "static/uploads", new_img_filename
             )
             img_file.save(img_storage_path)
 
@@ -173,7 +173,7 @@ def account():
             if current_user.image_file != "default.jpg":
                 old_img_file = current_user.image_file
                 old_img_file_path = os.path.join(
-                    app.root_path, "static/profile_pics", old_img_file
+                    app.root_path, "static/uploads", old_img_file
                 )
                 if os.path.exists(old_img_file_path):
                     os.remove(old_img_file_path)
@@ -192,7 +192,7 @@ def account():
         form.username.data = current_user.username
         form.email.data = current_user.email
 
-    image_file = url_for("static", filename="profile_pics/" + current_user.image_file)
+    image_file = url_for("static", filename="uploads/" + current_user.image_file)
     return render_template(
         "account.html", title="Account", image_file=image_file, form=form
     )
