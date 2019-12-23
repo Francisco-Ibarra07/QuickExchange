@@ -10,6 +10,8 @@ from quickexchange.forms import (
     LoginForm,
     UpdateAccountForm,
     DataPostForm,
+    RequestResetForm,
+    ResetPasswordForm
 )
 from flask import Markup
 from flask_jwt import jwt_required
@@ -412,3 +414,25 @@ def get_history():
         print("error on getting history")
         return jsonify({"message": "error on getting history"}), 500
 
+
+@app.route("/reset_password", methods=['GET', 'POST'])
+def reset_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    
+    form = RequestResetForm()
+    return render_template('reset-password-request.html', title='Reset Password', form=form)
+
+
+@app.route("/reset_password/<token>", methods=['GET', 'POST'])
+def reset_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    
+    user = User.verify_reset_token(token)
+    if user is None:
+        flash('That is an invalid or expired token', 'warning')
+        return redirect(url_for('reset_request'))
+    
+    form = ResetPasswordForm()
+    return render_template('reset-password.html', title='Reset Password', form=form)
