@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="quickexchange/static/img/QE.png"/>
+  <img src="quickexchange/static/images/QE.png"/>
 </p>
 
 [![Build Status](https://travis-ci.org/Francisco-Ibarra07/QuickExchange.svg?branch=master)](https://travis-ci.org/Francisco-Ibarra07/QuickExchange)
