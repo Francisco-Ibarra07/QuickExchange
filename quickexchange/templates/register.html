@@ -89,16 +89,16 @@
     </fieldset>
 
     <div class="form-group">
-      {{ form.submit(class="btn btn-outline-info") }}
+      {{ form.submit(class="btn btn-primary btn-outline-info") }}
     </div>
 
+    <div class="border-top pt-3">
+      <small class="text-muted">
+        <!-- Use an ANCHOR tag to redirect if text is clicked -->
+        Already Have An Account? <a class="ml-2" href="{{ url_for('login') }}">Sign In</a>
+      </small>
+    </div>
   </form>
 </div>
 
-<div class="border-top pt-3">
-  <small class="text-muted">
-    <!-- Use an ANCHOR tag to redirect if text is clicked -->
-    Already Have An Account? <a class="ml-2" href="{{ url_for('login') }}">Sign In</a>
-  </small>
-</div>
 {% endblock content %}

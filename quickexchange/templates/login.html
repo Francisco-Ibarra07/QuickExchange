@@ -56,20 +56,23 @@
     </fieldset>
 
     <div class="form-group">
-      {{ form.submit(class="btn btn-outline-info") }}
+      {{ form.submit(class="btn btn-primary btn-outline-info") }}
     </div>
 
-    <small class="text-muted ml-2">
-      <a href="#">Forgot Password?</a>
-    </small>
+    <div class="border-top pt-3">
+      <small class="text-muted ml-2">
+        <a href="#">Forgot Password? Click here to reset!</a>
+      </small>
+    </div>
 
+    <br>
+
+    <div class="border-top pt-3">
+      <small class="text-muted">
+        Need An Account? <a class="ml-2" href="{{ url_for('register') }}">Sign Up Now</a>
+      </small>
+    </div>
   </form>
 </div>
 
-<div class="border-top pt-3">
-  <small class="text-muted">
-    <!-- Use an ANCHOR tag to redirect if text is clicked -->
-    Need An Account? <a class="ml-2" href="{{ url_for('register') }}">Sign Up Now</a>
-  </small>
-</div>
 {% endblock content %}
