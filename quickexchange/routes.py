@@ -3,7 +3,7 @@ import jwt
 import secrets
 import datetime
 from werkzeug.utils import secure_filename
-from quickexchange import app, bcrypt, db
+from quickexchange import app, bcrypt, db, mail
 from quickexchange.models import User, DataPost
 from quickexchange.forms import (
     RegistrationForm,
@@ -17,6 +17,7 @@ from flask import Markup
 from flask_jwt import jwt_required
 from flask import render_template, url_for, flash, redirect, request, jsonify
 from flask_login import login_user, current_user, logout_user, login_required
+from flask_mail import Message
 
 
 @app.route("/")
@@ -415,12 +416,34 @@ def get_history():
         return jsonify({"message": "error on getting history"}), 500
 
 
+def send_reset_email(user):
+    token = user.get_reset_token()
+    message = Message(
+        'Password Reset Request', 
+        sender='noreply@demo.com',
+        recipients=[user.email]
+    )
+
+    message.body = f'''To reset your password, visit the following link: 
+{url_for('reset_request', token=token, _external=True)}
+
+If you did not make this request then simply ignore this email and no changes will be made.   
+'''
+    mail.send(message)
+
+
 @app.route("/reset_password", methods=['GET', 'POST'])
 def reset_request():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     
     form = RequestResetForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        send_reset_email(user)
+        flash(f'An email has been sent to {user.email} with instructions to reset your password', 'info')
+        return redirect(url_for('login'))
+        
     return render_template('reset-password-request.html', title='Reset Password', form=form)
 
 
@@ -435,4 +458,12 @@ def reset_password(token):
         return redirect(url_for('reset_request'))
     
     form = ResetPasswordForm()
+    if form.validate_on_submit():
+        hashed_pw = bcrypt.generate_password_hash(form.password.data).decode("utf-8")  
+        user.password = hashed_pw
+        db.session.commit()
+
+        flash("Your password has been updated!", "success")
+        return redirect(url_for("login"))
+
     return render_template('reset-password.html', title='Reset Password', form=form)

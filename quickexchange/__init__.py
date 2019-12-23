@@ -5,12 +5,14 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_jwt import JWT
+from flask_mail import Mail
 
 app = Flask(__name__, instance_relative_config=True)
 app.config.from_pyfile("config.py")
 db = SQLAlchemy(app)
 cors = CORS(app)
 bcrypt = Bcrypt(app)
+mail = Mail(app)
 login_manager = LoginManager(app)
 login_manager.login_view = "login"  # <-- function name of our login route
 login_manager.login_message_category = "info"
