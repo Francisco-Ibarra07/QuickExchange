@@ -2,6 +2,7 @@ appdirs==1.4.3
 astroid==2.3.3
 attrs==19.3.0
 bcrypt==3.1.7
+blinker==1.4
 cffi==1.13.1
 Click==7.0
 colorama==0.4.3
@@ -10,6 +11,7 @@ Flask-Bcrypt==0.7.1
 Flask-Cors==3.0.8
 Flask-JWT==0.3.2
 Flask-Login==0.4.1
+Flask-Mail==0.9.1
 Flask-SQLAlchemy==2.4.1
 Flask-WTF==0.14.2
 isort==4.3.21
@@ -19,6 +21,7 @@ lazy-object-proxy==1.4.3
 MarkupSafe==1.1.1
 mccabe==0.6.1
 pathspec==0.6.0
+pkg-resources==0.0.0
 pycodestyle==2.5.0
 pycparser==2.19
 PyJWT==1.4.2
