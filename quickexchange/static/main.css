@@ -102,7 +102,7 @@ html, body {
 
 /* For landing-page.html */
 #home {
-  background: url(img/laptop.jpg) no-repeat center center fixed;
+  background: url(images/laptop.jpg) no-repeat center center fixed;
   height: 100%;
   width: 100%;
   padding: 10%;
@@ -140,7 +140,7 @@ html, body {
 }
 
 #fixed {
-  background: url(img/phones.jpg) no-repeat center center fixed;
+  background: url(images/phones.jpg) no-repeat center center fixed;
   display: table;
   height: 40%;
   position: relative;
