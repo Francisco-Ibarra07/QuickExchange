@@ -116,7 +116,7 @@ def register():
             "utf-8"
         )  # Decode() returns us a string
         user = User(
-            username=form.username.data, email=form.email.data, password=hashed_pw
+            username=form.username.data, email=(form.email.data).lower(), password=hashed_pw
         )
         db.session.add(user)
         db.session.commit()
@@ -135,7 +135,7 @@ def login():
 
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
+        user = User.query.filter_by(email=(form.email.data).lower()).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get("next")
@@ -184,7 +184,7 @@ def account():
             current_user.image_file = new_img_filename
 
         current_user.username = form.username.data
-        current_user.email = form.email.data
+        current_user.email = (form.email.data).lower()
         db.session.commit()
         flash("Your account has been updated!", "success")
         return redirect(
@@ -222,7 +222,7 @@ def get_latest_post():
         return jsonify({"message": "email not supplied"}), 400
 
     # Make sure user exists
-    user_email = request_data["email"]
+    user_email = request_data["email"].lower()
     target_user = User.query.filter_by(email=user_email).first()
     if target_user is None:
         return jsonify({"message": "user does not exist"}), 400
@@ -270,7 +270,7 @@ def create_file_post():
     # Make sure an email is provided so we can find the user
     # Make sure an actual file is passed in
     file = request_file_data.get("file")
-    user_email = request_form_data.get("email")
+    user_email = request_form_data.get("email").lower()
     if file is None or user_email is None:
         print("no file or email supplied")
         return jsonify({"message": "no file or email was supplied"}), 400
@@ -346,7 +346,7 @@ def create_url_post():
         return jsonify({"message": "url was not supplied"}), 400
 
     # Make sure user exists
-    user_email = request_data["email"]
+    user_email = request_data["email"].lower()
     target_user = User.query.filter_by(email=user_email).first()
     if target_user is None:
         print("user does not exist")
@@ -376,7 +376,7 @@ def get_history():
         return jsonify({"message": "email not supplied"}), 400
 
     # Make sure user exists
-    user_email = request_data["email"]
+    user_email = request_data["email"].lower()
     target_user = User.query.filter_by(email=user_email).first()
     if target_user is None:
         print("user does not exist")
@@ -425,21 +425,22 @@ def send_reset_email(user):
     )
 
     message.body = f'''To reset your password, visit the following link: 
-{url_for('reset_request', token=token, _external=True)}
+{url_for('reset_password', token=token, _external=True)}
 
 If you did not make this request then simply ignore this email and no changes will be made.   
 '''
     mail.send(message)
 
 
-@app.route("/reset_password", methods=['GET', 'POST'])
-def reset_request():
+@app.route("/reset_password_request", methods=['GET', 'POST'])
+def reset_password_request():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     
     form = RequestResetForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
+        email = (form.email.data).lower()
+        user = User.query.filter_by(email=email).first()
         send_reset_email(user)
         flash(f'An email has been sent to {user.email} with instructions to reset your password', 'info')
         return redirect(url_for('login'))
@@ -447,6 +448,7 @@ def reset_request():
     return render_template('reset-password-request.html', title='Reset Password', form=form)
 
 
+# TODO: Test reset password process (it threw an exception the first time i tried it :()
 @app.route("/reset_password/<token>", methods=['GET', 'POST'])
 def reset_password(token):
     if current_user.is_authenticated:
@@ -455,7 +457,7 @@ def reset_password(token):
     user = User.verify_reset_token(token)
     if user is None:
         flash('That is an invalid or expired token', 'warning')
-        return redirect(url_for('reset_request'))
+        return redirect(url_for('reset_password_request'))
     
     form = ResetPasswordForm()
     if form.validate_on_submit():
