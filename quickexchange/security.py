@@ -3,7 +3,7 @@ from quickexchange.models import User
 
 # Function will be used to authenticate a user
 def authenticate(email, password):
-  user = User.query.filter_by(email=email).first()
+  user = User.query.filter_by(email=email.lower()).first()
   if user and bcrypt.check_password_hash(user.password, password):
     return user
 
