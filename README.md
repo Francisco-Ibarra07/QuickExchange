@@ -4,7 +4,7 @@
 
 [![Build Status](https://travis-ci.org/Francisco-Ibarra07/QuickExchange.svg?branch=master)](https://travis-ci.org/Francisco-Ibarra07/QuickExchange)
 
-# QuickExchange (Site is currently a work in progress)
+# QuickExchange
 Use QuickExchange as your middleman to swap pictures, URL links, videos, or files between any mobile or desktop platform.
 
 Link to prototype website: 
